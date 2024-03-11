@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
     private IEnumerator coroutine;
 
     [Header("Respawn")]
-    private Vector3 respawnPoint;
+    private Vector2 respawnPoint;
     public GameObject FallDetector;
 
     [Header("Movement")]
@@ -101,7 +101,7 @@ public class Movement : MonoBehaviour
             moveSpeed = 5f;
             scale = 5f;
         }
-        else if (isMooving == false)
+        if (isMooving == false)
         {
             dashSpeed = 0f;
             moveSpeed = 0;
@@ -152,8 +152,9 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            //rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
             // Player_Animator.SetBool("BoolRun", true);
-             sprite_renderer.flipX = true;                                                                            //flip the direction of the animation
+            sprite_renderer.flipX = true;                                                                            //flip the direction of the animation
                                                                                                                       //fx-particle
              /*Particle_VFX.Play();
              Particle_VFX.transform.eulerAngles = new Vector3(0, -90, 0);
@@ -163,7 +164,7 @@ public class Movement : MonoBehaviour
         }
 
         //-----------------Dash-----------------  
-        else if (Input.GetKey(KeyCode.LeftShift) && canDash == true)
+        if (Input.GetKey(KeyCode.LeftShift) && canDash == true)
         {
             StartCoroutine(Dash());
             //Animator_player.SetBool("Bool_Dash", true);
@@ -173,8 +174,9 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            //rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
             //  Player_Animator.SetBool("BoolRun", true);                                                               //play run animation
-               sprite_renderer.flipX = false;                                                                          //flip the direction of the animation
+            sprite_renderer.flipX = false;                                                                          //flip the direction of the animation
 
             /*  Particle_VFX.Play();
                Particle_VFX.transform.eulerAngles = new Vector3(0, 90, 0);
@@ -223,11 +225,11 @@ public class Movement : MonoBehaviour
 
 
         //Scale                                                                                                                       //this is a scale for growing or shrinking my character
-        else if (Input.GetKey(KeyCode.KeypadMinus))
+        if (Input.GetKey(KeyCode.KeypadMinus))
         {
             transform.localScale += new Vector3(-scale * Time.deltaTime, -scale * Time.deltaTime, -scale * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.KeypadPlus))
+        if (Input.GetKey(KeyCode.KeypadPlus))
         {
             transform.localScale += new Vector3(scale * Time.deltaTime, scale * Time.deltaTime, scale * Time.deltaTime);
         }

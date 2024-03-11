@@ -40,6 +40,10 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        Moving.isMooving = true;
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1;
+        gameIsPaused = false;
         SceneManager.LoadScene("Main_Menu");
     }
 }
