@@ -149,7 +149,7 @@ public class Movement : MonoBehaviour
         }
         */
         //-----------------Translate-----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A) && isMooving == true)
         {
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             //rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
@@ -164,14 +164,14 @@ public class Movement : MonoBehaviour
         }
 
         //-----------------Dash-----------------  
-        if (Input.GetKey(KeyCode.LeftShift) && canDash == true)
+        if (Input.GetKey(KeyCode.LeftShift) && canDash == true && isMooving == true)
         {
             StartCoroutine(Dash());
             //Animator_player.SetBool("Bool_Dash", true);
         }
 
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D) && isMooving == true)
         {
             transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             //rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
@@ -185,7 +185,7 @@ public class Movement : MonoBehaviour
             */
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
+        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving == true)
         {
             isGrounded = false;
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
@@ -224,7 +224,8 @@ public class Movement : MonoBehaviour
         */
 
 
-        //Scale                                                                                                                       //this is a scale for growing or shrinking my character
+        /*
+        Scale                                                                                                                       //this is a scale for growing or shrinking my character
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
             transform.localScale += new Vector3(-scale * Time.deltaTime, -scale * Time.deltaTime, -scale * Time.deltaTime);
@@ -233,7 +234,7 @@ public class Movement : MonoBehaviour
         {
             transform.localScale += new Vector3(scale * Time.deltaTime, scale * Time.deltaTime, scale * Time.deltaTime);
         }
-
+        */
 
         //-----------------Animation-----------------
         /*

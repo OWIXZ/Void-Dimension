@@ -24,7 +24,7 @@ public class TileSwtich : MonoBehaviour
 
     public void Mecha()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             tileMap.enabled = !tileMap.enabled;
             tileCo.enabled = !tileCo.enabled;

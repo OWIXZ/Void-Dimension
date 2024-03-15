@@ -28,7 +28,7 @@ public class tileSwtich2 : MonoBehaviour
 
     public void Mecha2()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             tileMap2.enabled = !tileMap2.enabled;
             tileCo2.enabled = !tileCo2.enabled;
