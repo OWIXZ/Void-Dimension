@@ -9,12 +9,11 @@ public class Movement : MonoBehaviour
     //-----------------ANIM-----------------
     
     [SerializeField] SpriteRenderer sprite_renderer;                                           //I enter the differents variables
-    /*[SerializeField] Animator Player_Animator;
-    private bool BoolRun;                                                                     //these bool variables allow me to bridge the gap between animation and code
-    private bool BoolJump;
-    private bool BoolDeath;
-    private bool BoolAttack;
-    */
+    [SerializeField] Animator Player_Animator;                                                                     //these bool variables allow me to bridge the gap between animation and code
+    //private bool BoolJump;
+    //private bool BoolDeath;
+    //private bool BoolAttack;
+
     //-----------------MOVEMENT-----------------
     [Header("Dashing proprieties")]
     [SerializeField] bool canDash = true;
@@ -31,9 +30,7 @@ public class Movement : MonoBehaviour
     public GameObject FallDetector;
 
     [Header("Movement")]
-    private float moveSpeed = 10f;
-    //private float rotateSpeed = 50f;             
-    private float scale = 5f;
+    private float moveSpeed = 20f;
     [SerializeField] int jumpPower;
 
     bool isGrounded;
@@ -66,8 +63,15 @@ public class Movement : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        PlayerOneController();
+       
     }
+    void FixedUpdate()
+    {
+        PlayerOneController();
+        Jump();
+        DashAction();
+    }
+
     IEnumerator Dash()
     {
         canDash = false;
@@ -99,69 +103,52 @@ public class Movement : MonoBehaviour
         {
             dashSpeed = 15f;
             moveSpeed = 5f;
-            scale = 5f;
         }
         if (isMooving == false)
         {
             dashSpeed = 0f;
             moveSpeed = 0;
-            scale = 0f;
-        }
-
-        //Speed                                                                                //these values allow me to increase or decrease my character's speed to adapt to different situations on the map
-       /*
-        if (Input.GetKey(KeyCode.Q))
-        {
-            moveSpeed = moveSpeed + 0.5f;
-            Debug.Log(moveSpeed);
-        }
-
-        else if (Input.GetKey(KeyCode.W))
-        {
-            moveSpeed = moveSpeed + -0.5f;
-            Debug.Log(moveSpeed);
         }
         
-        else if (Input.GetKey(KeyCode.E))
+        //-----------------Deplacement -----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
+      
+
+        if (Input.GetKey(KeyCode.D) && isMooving == true)
         {
-            rotateSpeed = rotateSpeed + 0.5f;
-            Debug.Log(rotateSpeed);
+            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            //rb.velocity = new Vector2(moveSpeed, rb.velocity.y);                                                              //play run animation
+            Player_Animator.SetBool("BoolRun", true);
+            sprite_renderer.flipX = false;                                                                          //flip the direction of the animation
+
         }
 
-        else if (Input.GetKey(KeyCode.R))
-        {
-            rotateSpeed = rotateSpeed + -0.5f;
-            Debug.Log(rotateSpeed);
-        }
-        */
-
-        //-----------------Death-----------------
-        /*
-        else if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            Player_Animator.SetBool("BoolDeath", true);
-        }
-
-        //-----------------Attack-----------------
-        else if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            Player_Animator.SetBool("BoolAttack", true);
-        }
-        */
-        //-----------------Translate-----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
-        if (Input.GetKey(KeyCode.A) && isMooving == true)
+        else if (Input.GetKey(KeyCode.A) && isMooving == true)
         {
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             //rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-            // Player_Animator.SetBool("BoolRun", true);
+            Player_Animator.SetBool("BoolRun", true);
             sprite_renderer.flipX = true;                                                                            //flip the direction of the animation
-                                                                                                                      //fx-particle
-             /*Particle_VFX.Play();
-             Particle_VFX.transform.eulerAngles = new Vector3(0, -90, 0);
-
-             footstepsSound.enabled = true;
-              */
+                                                                                                                     //fx-particle
         }
+        else                                                                                                                           //I make sure that when I release the key, the animation ends.
+        {
+            Player_Animator.SetBool("BoolRun", false);
+        }
+
+    }
+
+    private void Jump()
+    {
+        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving == true)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+
+            //  Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
+        }
+    }
+
+    private void DashAction()
+    {
 
         //-----------------Dash-----------------  
         if (Input.GetKey(KeyCode.LeftShift) && canDash == true && isMooving == true)
@@ -170,92 +157,15 @@ public class Movement : MonoBehaviour
             //Animator_player.SetBool("Bool_Dash", true);
         }
 
-
-        if (Input.GetKey(KeyCode.D) && isMooving == true)
-        {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-            //rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-            //  Player_Animator.SetBool("BoolRun", true);                                                               //play run animation
-            sprite_renderer.flipX = false;                                                                          //flip the direction of the animation
-
-            /*  Particle_VFX.Play();
-               Particle_VFX.transform.eulerAngles = new Vector3(0, 90, 0);
-
-               footstepsSound.enabled = true;
-            */
-        }
-
-        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving == true)
-        {
-            isGrounded = false;
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-
-            //  Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
-        }
-
-        /*
-        //Rotate                                                                                                   //when i press the chosen keys, i can Rotate on sur different axes
-
-        if (Input.GetKey(KeyCode.Keypad0))
-        {
-        isMooving = true;
-            transform.Rotate(Vector3.left * rotateSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.Keypad1))
-        {
-        isMooving = true;
-            transform.Rotate(Vector3.right * rotateSpeed * Time.deltaTime);
-        }
-
-
-        if (Input.GetKey(KeyCode.Keypad2))
-        {
-        isMooving = true;
-            transform.Rotate(Vector3.down * rotateSpeed * Time.deltaTime);
-        }
-
-
-        if (Input.GetKey(KeyCode.Keypad3))
-        {
-        isMooving = true;     
-            transform.Rotate(Vector3.down * rotateSpeed * Time.deltaTime);
-        }
-        */
-
-
-        /*
-        Scale                                                                                                                       //this is a scale for growing or shrinking my character
-        if (Input.GetKey(KeyCode.KeypadMinus))
-        {
-            transform.localScale += new Vector3(-scale * Time.deltaTime, -scale * Time.deltaTime, -scale * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.KeypadPlus))
-        {
-            transform.localScale += new Vector3(scale * Time.deltaTime, scale * Time.deltaTime, scale * Time.deltaTime);
-        }
-        */
-
         //-----------------Animation-----------------
-        /*
-        else                                                                                                                           //I make sure that when I release the key, the animation ends.
+
+        /*else                                                                                                                           //I make sure that when I release the key, the animation ends.
         {
             Player_Animator.SetBool("BoolRun", false);
-
-            if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-            {
-                Particle_VFX.Pause();
-                Particle_VFX.Clear();
-            }
-
-            Player_Animator.SetBool("BoolAttack", false);
-            Player_Animator.SetBool("BoolDeath", false);
-            Player_Animator.SetBool("BoolJump", false);
-
-            footstepsSound.enabled = false;
-        }
-        */
+        }*/
     }
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Ground")
@@ -272,6 +182,13 @@ public class Movement : MonoBehaviour
         else if (collision.tag == "Checkpoint")
         {
             respawnPoint = transform.position;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Ground")
+        {
+            isGrounded = false;
         }
     }
 }
