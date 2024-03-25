@@ -30,7 +30,7 @@ public class Movement : MonoBehaviour
     public GameObject FallDetector;
 
     [Header("Movement")]
-    private float moveSpeed = 20f;
+    private float moveSpeed = 10f;
     [SerializeField] int jumpPower;
 
     bool isGrounded;
@@ -102,7 +102,7 @@ public class Movement : MonoBehaviour
         if (isMooving == true)
         {
             dashSpeed = 15f;
-            moveSpeed = 5f;
+            moveSpeed = 10f;
         }
         if (isMooving == false)
         {
@@ -142,8 +142,11 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving == true)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-
-            //  Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
+            Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
+        }
+        else                                                                                                                           //I make sure that when I release the key, the animation ends.
+        {
+            Player_Animator.SetBool("BoolJump", false);
         }
     }
 
