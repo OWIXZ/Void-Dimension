@@ -1896,7 +1896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86732a02282b764a875e61d3c21e2d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Moving: {fileID: 0}
+  Moving: {fileID: 1665484404}
   pauseMenuUI: {fileID: 1668807233}
 --- !u!4 &926432936
 Transform:
@@ -2202,7 +2202,19 @@ MonoBehaviour:
   m_CustomBlends: {fileID: 0}
   m_CameraCutEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2745,7 +2757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 148300077}
-  remainingTime: 300
+  remainingTime: 65
 --- !u!1 &1243776519
 GameObject:
   m_ObjectHideFlags: 0
@@ -3346,9 +3358,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite_renderer: {fileID: 1665484405}
   Player_Animator: {fileID: 1665484407}
-  canDash: 0
-  isDashing: 0
-  dashSpeed: 15
+  canDash: 1
+  isDashing: 1
+  dashSpeed: 10
   dashingTime: 0.4
   dashingCooldown: 1
   tm: 0

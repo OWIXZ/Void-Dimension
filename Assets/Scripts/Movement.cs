@@ -10,14 +10,10 @@ public class Movement : MonoBehaviour
     
     [SerializeField] SpriteRenderer sprite_renderer;                                           //I enter the differents variables
     [SerializeField] Animator Player_Animator;                                                                     //these bool variables allow me to bridge the gap between animation and code
-    //private bool BoolJump;
-    //private bool BoolDeath;
-    //private bool BoolAttack;
 
     //-----------------MOVEMENT-----------------
     [Header("Dashing proprieties")]
     [SerializeField] bool canDash = true;
-    
     [SerializeField] bool isDashing;
     [SerializeField] float dashSpeed = 15f;
     [SerializeField] float dashingTime = 0.4f;
@@ -74,6 +70,7 @@ public class Movement : MonoBehaviour
 
     IEnumerator Dash()
     {
+        isMooving = false;
         canDash = false;
         isDashing = true;
         tm = Time.time;
@@ -89,9 +86,10 @@ public class Movement : MonoBehaviour
         }
 
         yield return new WaitForSeconds(dashingTime);
-        // Animator_player.SetBool("Bool_Dash", false);
+        // Animator_player.SetBool("BoolDash", false);
         rb.gravityScale = originalGravity;
         isDashing = false;
+        isMooving = true;
         rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
@@ -157,7 +155,7 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && canDash == true && isMooving == true)
         {
             StartCoroutine(Dash());
-            //Animator_player.SetBool("Bool_Dash", true);
+            //Animator_player.SetBool("BoolDash", true);
         }
 
         //-----------------Animation-----------------

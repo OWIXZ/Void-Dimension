@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SCN_NIV-1.unity
     guid: 232a1dbb6a11d524ca45a30d63b0b3c6
   - enabled: 1
-    path: Assets/Scenes/WIN.unity
+    path: Assets/Scenes/Game_Over.unity
     guid: 8b9c20aed0bc33d4aa9d4cfe5edcf46a
+  - enabled: 1
+    path: Assets/Scenes/WIN.unity
+    guid: 9c1749392731acb478778c8df9da8404
   m_configObjects: {}

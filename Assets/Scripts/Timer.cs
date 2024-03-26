@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
@@ -14,12 +15,17 @@ public class Timer : MonoBehaviour
         {
             remainingTime -= Time.deltaTime;
         }
-        else if (remainingTime < 0)
-        {  
-            remainingTime = 0; 
+        if (remainingTime < 60)
+        {
             // GameOver();
             timerText.color = Color.red;
         }
+        if (remainingTime <= 1)
+        {
+            SceneManager.LoadScene("Game_Over");
+        }
+            
+
         int minutes = Mathf.FloorToInt(remainingTime / 60);
         int seconds = Mathf.FloorToInt(remainingTime % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);

@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -14,7 +16,10 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-
+        if (currentHealth <= 0)
+        {
+            SceneManager.LoadScene("Game_Over");
+        }
     }
 
     void TakeDomage(int domage)
@@ -26,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.tag == "FallDetector")
         {
-            TakeDomage(10); ;
+            TakeDomage(10);
         }
     }
 }
