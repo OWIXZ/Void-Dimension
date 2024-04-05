@@ -1967,7 +1967,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 303f72fb00946c2449383d5095a97b96, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3431,7 +3431,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.15, y: 1.58, z: 0}
-  m_LocalScale: {x: 0.2354135, y: 0.2354135, z: 0.2354135}
+  m_LocalScale: {x: 0.1667481, y: 0.1667481, z: 0.1667481}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1735353666}
