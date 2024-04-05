@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
     private float dashSpeed = 15f;
     private float dashingTime = 0.4f;
     private float dashingCooldown = 1f;
-    private float JumpingCooldown = 1.2f;
+    private float JumpingCooldown = 1.1f;
     private float tm;
     private IEnumerator coroutine;
 
