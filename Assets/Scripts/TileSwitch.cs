@@ -8,6 +8,12 @@ public class TileSwtich : MonoBehaviour
 {
     private SpriteRenderer tileMap;
     private BoxCollider2D tileCo;
+    [SerializeField] bool canSwitch = true;
+    [SerializeField] float SwitchingCooldown = 0.5f;
+    [SerializeField] float tm;
+    private IEnumerator coroutine;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +28,22 @@ public class TileSwtich : MonoBehaviour
         Mecha();
     }
 
+    IEnumerator Switch()
+    {
+        canSwitch = false;
+        tm = Time.time;
+        yield return new WaitForSeconds(SwitchingCooldown);
+        canSwitch = true;
+    }
+
+
+
     public void Mecha()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+
+        if (Input.GetKeyDown(KeyCode.W) && canSwitch == true)
         {
+            StartCoroutine(Switch());
             tileMap.enabled = !tileMap.enabled;
             tileCo.enabled = !tileCo.enabled;
         }

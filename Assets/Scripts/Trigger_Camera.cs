@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trigger_Player : MonoBehaviour
+public class Trigger_Camera : MonoBehaviour
 {
     [SerializeField] GameObject camera1;
     [SerializeField] GameObject camera2;

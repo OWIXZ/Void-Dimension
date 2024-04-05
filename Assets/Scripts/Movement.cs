@@ -13,12 +13,13 @@ public class Movement : MonoBehaviour
 
     //-----------------MOVEMENT-----------------
     [Header("Dashing proprieties")]
+    [SerializeField] bool canJump = true;
     [SerializeField] bool canDash = true;
-    [SerializeField] bool isDashing;
-    [SerializeField] float dashSpeed = 15f;
-    [SerializeField] float dashingTime = 0.4f;
-    [SerializeField] float dashingCooldown = 1f;
-    [SerializeField] float tm;
+    private float dashSpeed = 15f;
+    private float dashingTime = 0.4f;
+    private float dashingCooldown = 1f;
+    private float JumpingCooldown = 1.2f;
+    private float tm;
     private IEnumerator coroutine;
 
     [Header("Respawn")]
@@ -72,7 +73,6 @@ public class Movement : MonoBehaviour
     {
         isMooving = false;
         canDash = false;
-        isDashing = true;
         tm = Time.time;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
@@ -88,11 +88,17 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         // Animator_player.SetBool("BoolDash", false);
         rb.gravityScale = originalGravity;
-        isDashing = false;
         isMooving = true;
         rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+    }
+
+    IEnumerator JumpCo()
+    {
+        canJump = false;
+        yield return new WaitForSeconds(JumpingCooldown);
+        canJump = true;
     }
 
     void PlayerOneController()
@@ -137,10 +143,11 @@ public class Movement : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving == true)
+        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving == true && canJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
+            StartCoroutine(JumpCo());
         }
         else                                                                                                                           //I make sure that when I release the key, the animation ends.
         {
