@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
     //-----------------ANIM-----------------
-    
+
     [SerializeField] SpriteRenderer sprite_renderer;                                           //I enter the differents variables
     [SerializeField] Animator Player_Animator;                                                                     //these bool variables allow me to bridge the gap between animation and code
-
+    Animation anim;
     //-----------------MOVEMENT-----------------
     [Header("Dashing proprieties")]
     [SerializeField] bool canJump = true;
@@ -30,27 +31,25 @@ public class Movement : MonoBehaviour
     private float moveSpeed = 10f;
     [SerializeField] int jumpPower;
 
-    bool isGrounded;
+    bool isGrounded = false;
     public bool isMooving = true;
-
-
-    //[SerializeField] Animator playerAnimator;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rb;
+
+    [Header("Movement")]
+    [SerializeField] private Transform groundPosition;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Vector2 groundSize;
 
     //-----------------SOUND-----------------
 
     //public AudioSource footstepsSound;
 
-    //-----------------Particule Systeme-----------------
 
-    /*
     [Header("Particule")]
-    [SerializeField] ParticleSystem psJump;
-    [SerializeField] ParticleSystem psRun;
-    [SerializeField] ParticleSystem Particle_VFX;
-    */
-    //Start is called before the first frame update
+    [SerializeField] ParticleSystem dust;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -60,10 +59,11 @@ public class Movement : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-       
+
     }
     void FixedUpdate()
     {
+        Ground_Detection();
         PlayerOneController();
         Jump();
         DashAction();
@@ -94,11 +94,19 @@ public class Movement : MonoBehaviour
         canDash = true;
     }
 
+
     IEnumerator JumpCo()
     {
         canJump = false;
         yield return new WaitForSeconds(JumpingCooldown);
         canJump = true;
+    }
+
+    IEnumerator Animation()
+    {
+        dust.Play();
+        yield return new WaitForSeconds(0.1f);
+        dust.Stop();
     }
 
     void PlayerOneController()
@@ -113,42 +121,41 @@ public class Movement : MonoBehaviour
             dashSpeed = 0f;
             moveSpeed = 0;
         }
-        
+
         //-----------------Deplacement -----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
-      
 
-        if (Input.GetKey(KeyCode.D) && isMooving == true)
+
+        if (Input.GetKey(KeyCode.D) && isMooving)
         {
+            StartCoroutine(Animation());
             transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-            //rb.velocity = new Vector2(moveSpeed, rb.velocity.y);                                                              //play run animation
             Player_Animator.SetBool("BoolRun", true);
-            sprite_renderer.flipX = false;                                                                          //flip the direction of the animation
-
+            sprite_renderer.flipX = false;                                                                          //flip the direction of the animation 
         }
 
-        else if (Input.GetKey(KeyCode.A) && isMooving == true)
+        else if (Input.GetKey(KeyCode.A) && isMooving)
         {
+            StartCoroutine(Animation());
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-            //rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
             Player_Animator.SetBool("BoolRun", true);
             sprite_renderer.flipX = true;                                                                            //flip the direction of the animation
-                                                                                                                     //fx-particle
         }
         else                                                                                                                           //I make sure that when I release the key, the animation ends.
         {
             Player_Animator.SetBool("BoolRun", false);
         }
-
     }
 
     private void Jump()
     {
-        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving == true && canJump)
+        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving && canJump)
         {
+            dust.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
             StartCoroutine(JumpCo());
         }
+
         else                                                                                                                           //I make sure that when I release the key, the animation ends.
         {
             Player_Animator.SetBool("BoolJump", false);
@@ -157,9 +164,8 @@ public class Movement : MonoBehaviour
 
     private void DashAction()
     {
-
         //-----------------Dash-----------------  
-        if (Input.GetKey(KeyCode.LeftShift) && canDash == true && isMooving == true)
+        if (Input.GetKey(KeyCode.LeftShift) && canDash && isMooving)
         {
             StartCoroutine(Dash());
             //Animator_player.SetBool("BoolDash", true);
@@ -169,16 +175,30 @@ public class Movement : MonoBehaviour
 
         /*else                                                                                                                           //I make sure that when I release the key, the animation ends.
         {
-            Player_Animator.SetBool("BoolRun", false);
+            Player_Animator.SetBool("BoolDash", false);
         }*/
     }
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        if (collision.gameObject.name == "Ground")
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(groundPosition.position, groundSize);
+    }
+
+    private void Ground_Detection()
+    {
+
+        Collider2D[] Wall_Detection = Physics2D.OverlapBoxAll(groundPosition.position, groundSize, groundLayer);
+
+        isGrounded = false;
+
+        foreach (var Object in Wall_Detection)
         {
-            isGrounded = true;
+
+            if (Object.tag == "Ground")
+            {
+
+                isGrounded = true;
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -192,12 +212,9 @@ public class Movement : MonoBehaviour
             respawnPoint = transform.position;
         }
     }
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Ground")
-        {
-            isGrounded = false;
-        }
+       
     }
 }
 
