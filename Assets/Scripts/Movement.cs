@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -43,7 +42,7 @@ public class Movement : MonoBehaviour
 
     //-----------------SOUND-----------------
 
-    //public AudioSource footstepsSound;
+    public AudioSource footstepsSound;
 
 
     [Header("Particule")]
@@ -102,13 +101,6 @@ public class Movement : MonoBehaviour
         canJump = true;
     }
 
-    IEnumerator Animation()
-    {
-        dust.Play();
-        yield return new WaitForSeconds(0.1f);
-        dust.Stop();
-    }
-
     void PlayerOneController()
     {
         if (isMooving == true)
@@ -122,27 +114,33 @@ public class Movement : MonoBehaviour
             moveSpeed = 0;
         }
 
-        //-----------------Deplacement -----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
-
-
-        if (Input.GetKey(KeyCode.D) && isMooving)
+        if (isGrounded == false)
         {
-            StartCoroutine(Animation());
+            footstepsSound.enabled = false;
+        }
+
+            //-----------------Deplacement -----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
+
+
+            if (Input.GetKey(KeyCode.D) && isMooving)
+        {
             transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             Player_Animator.SetBool("BoolRun", true);
             sprite_renderer.flipX = false;                                                                          //flip the direction of the animation 
+            footstepsSound.enabled = true;
         }
 
         else if (Input.GetKey(KeyCode.A) && isMooving)
         {
-            StartCoroutine(Animation());
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
             Player_Animator.SetBool("BoolRun", true);
             sprite_renderer.flipX = true;                                                                            //flip the direction of the animation
+            footstepsSound.enabled = true;
         }
         else                                                                                                                           //I make sure that when I release the key, the animation ends.
         {
             Player_Animator.SetBool("BoolRun", false);
+            footstepsSound.enabled = false;
         }
     }
 
@@ -168,15 +166,15 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && canDash && isMooving)
         {
             StartCoroutine(Dash());
-            //Animator_player.SetBool("BoolDash", true);
+            Player_Animator.SetBool("BoolDash", true);
         }
 
         //-----------------Animation-----------------
 
-        /*else                                                                                                                           //I make sure that when I release the key, the animation ends.
+        else                                                                                                                           //I make sure that when I release the key, the animation ends.
         {
             Player_Animator.SetBool("BoolDash", false);
-        }*/
+        }
     }
     private void OnDrawGizmos()
     {
@@ -196,7 +194,6 @@ public class Movement : MonoBehaviour
 
             if (Object.tag == "Ground")
             {
-
                 isGrounded = true;
             }
         }
