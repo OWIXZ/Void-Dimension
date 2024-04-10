@@ -9,12 +9,13 @@ public class Movement : MonoBehaviour
     //-----------------ANIM-----------------
 
     [SerializeField] SpriteRenderer sprite_renderer;                                           //I enter the differents variables
-    [SerializeField] Animator Player_Animator;                                                                     //these bool variables allow me to bridge the gap between animation and code
-    Animation anim;
+    [SerializeField] Animator Player_Animator;                                                 //these bool variables allow me to bridge the gap between animation and code
+
     //-----------------MOVEMENT-----------------
     [Header("Dashing proprieties")]
     [SerializeField] bool canJump = true;
     [SerializeField] bool canDash = true;
+    public bool AbilitiesDash = false;
     private float dashSpeed = 15f;
     private float dashingTime = 0.4f;
     private float dashingCooldown = 1f;
@@ -55,11 +56,6 @@ public class Movement : MonoBehaviour
         respawnPoint = transform.position;
     }
 
-    //Update is called once per frame
-    void Update()
-    {
-
-    }
     void FixedUpdate()
     {
         Ground_Detection();
@@ -163,7 +159,7 @@ public class Movement : MonoBehaviour
     private void DashAction()
     {
         //-----------------Dash-----------------  
-        if (Input.GetKey(KeyCode.LeftShift) && canDash && isMooving)
+        if (Input.GetKey(KeyCode.LeftShift) && canDash && isMooving && AbilitiesDash)
         {
             StartCoroutine(Dash());
             Player_Animator.SetBool("BoolDash", true);

@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-public class tileSwtich2 : MonoBehaviour
+public class TileSwitch2 : MonoBehaviour
 {
-    private SpriteRenderer tileMap2;
-    private BoxCollider2D tileCo2;
-    [SerializeField] bool canSwitch = true;
+    private SpriteRenderer RE2;
+    private BoxCollider2D BO2;
+    public bool canSwitch = true;
+    public bool AbilitiesSwitch = false;
     [SerializeField] float SwitchingCooldown = 0.5f;
     [SerializeField] float tm;
     private IEnumerator coroutine;
@@ -17,10 +18,10 @@ public class tileSwtich2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tileMap2 = GetComponent<SpriteRenderer>();
-        tileCo2 = GetComponent<BoxCollider2D>();
-        tileMap2.enabled = false;
-        tileCo2.enabled = false;
+        RE2 = GetComponent<SpriteRenderer>();
+        BO2 = GetComponent<BoxCollider2D>();
+        RE2.enabled = false;
+        BO2.enabled = false;
 
     }
 
@@ -40,11 +41,11 @@ public class tileSwtich2 : MonoBehaviour
 
     public void Mecha2()
     {
-        if (Input.GetKeyDown(KeyCode.W) && canSwitch == true)
+        if (Input.GetKeyDown(KeyCode.W) && canSwitch && AbilitiesSwitch)
         {
             StartCoroutine(Switch());
-            tileMap2.enabled = !tileMap2.enabled;
-            tileCo2.enabled = !tileCo2.enabled;
+            RE2.enabled = !RE2.enabled;
+            BO2.enabled = !BO2.enabled;
         }
     }
 }

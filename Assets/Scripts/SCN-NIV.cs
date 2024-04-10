@@ -7,6 +7,9 @@ public class SCN_NIV : MonoBehaviour
 {
     public void ButtonPlay()
     {
-        SceneManager.LoadScene("SCN_NIV-1");
+        {  
+            SceneManager.LoadScene("SCN_NIV-1");
+        }
+        
     }
 }

@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-public class TileSwtich : MonoBehaviour
+public class TileSwitch : MonoBehaviour
 {
-    private SpriteRenderer tileMap;
-    private BoxCollider2D tileCo;
-    [SerializeField] bool canSwitch = true;
+    private SpriteRenderer RE1;
+    private BoxCollider2D BO1;
+    public bool canSwitch = true;
+    public bool AbilitiesSwitch = false;
     [SerializeField] float SwitchingCooldown = 0.5f;
     [SerializeField] float tm;
     private IEnumerator coroutine;
@@ -18,8 +19,8 @@ public class TileSwtich : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tileMap = GetComponent <SpriteRenderer>();
-        tileCo = GetComponent<BoxCollider2D>();
+        RE1 = GetComponent <SpriteRenderer>();
+        BO1 = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -41,11 +42,11 @@ public class TileSwtich : MonoBehaviour
     public void Mecha()
     {
 
-        if (Input.GetKeyDown(KeyCode.W) && canSwitch == true)
+        if (Input.GetKeyDown(KeyCode.W) && canSwitch && AbilitiesSwitch)
         {
             StartCoroutine(Switch());
-            tileMap.enabled = !tileMap.enabled;
-            tileCo.enabled = !tileCo.enabled;
+            RE1.enabled = !RE1.enabled;
+            BO1.enabled = !BO1.enabled;
         }
     }
 }
