@@ -36,7 +36,6 @@ public class Movement : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rb;
 
-    [Header("Movement")]
     [SerializeField] private Transform groundPosition;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Vector2 groundSize;

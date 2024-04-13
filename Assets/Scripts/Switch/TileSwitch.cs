@@ -17,7 +17,7 @@ public class TileSwitch : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     private CinemachineImpulseSource impulseSource;
     [SerializeField] PauseMenu pauseMenu;
-
+    [SerializeField] ParticleSystem ShockWave;
     [SerializeField] private ScreenShake profile;
 
     void Start()
@@ -47,10 +47,12 @@ public class TileSwitch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W) && canSwitch)
         {
+            ShockWave.Play();
             CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
             StartCoroutine(Switch());
             RE1.enabled = !RE1.enabled;
             BO1.enabled = !BO1.enabled;
+            ShockWave.Stop();
         }
 
         else if (RE1.enabled)
