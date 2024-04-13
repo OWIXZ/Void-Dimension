@@ -69,10 +69,5 @@ public class TileSwitch2 : MonoBehaviour
         {
             Time.timeScale = 1.5f;
         }
-        
-       
-
-    
-
     }
 }

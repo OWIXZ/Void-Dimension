@@ -30,6 +30,8 @@ public class Movement : MonoBehaviour
     [Header("Movement")]
     private float moveSpeed = 10f;
     [SerializeField] int jumpPower;
+    public bool canSwitch = true;
+    [SerializeField] float SwitchingCooldown = 0.5f;
 
     bool isGrounded = false;
     public bool isMooving = true;
@@ -43,6 +45,7 @@ public class Movement : MonoBehaviour
 
     [Header("Particule")]
     [SerializeField] ParticleSystem dust;
+    [SerializeField] ParticleSystem ShockWave;
 
 
     void Start()
@@ -84,7 +87,13 @@ public class Movement : MonoBehaviour
         canDash = true;
     }
 
-
+    IEnumerator Switch()
+    {
+        canSwitch = false;
+        tm = Time.time;
+        yield return new WaitForSeconds(SwitchingCooldown);
+        canSwitch = true;
+    }
     IEnumerator JumpCo()
     {
         canJump = false;
@@ -121,10 +130,17 @@ public class Movement : MonoBehaviour
             Player_Animator.SetBool("BoolRun", true);
             sprite_renderer.flipX = true;                                                                            //flip the direction of the animation
         }
-        else                                                                                                                           //I make sure that when I release the key, the animation ends.
+        else                                                                                                        //I make sure that when I release the key, the animation ends.
         {
             Player_Animator.SetBool("BoolRun", false);
         }
+
+        if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch)
+        {
+            ShockWave.Play();
+            Switch();
+        }
+           
     }
 
     private void Jump()

@@ -4339,6 +4339,8 @@ MonoBehaviour:
   AbilitiesDash: 0
   FallDetector: {fileID: 360225969}
   jumpPower: 8
+  canSwitch: 1
+  SwitchingCooldown: 0.5
   isMooving: 1
   spriteRenderer: {fileID: 1665484405}
   rb: {fileID: 0}
@@ -4348,6 +4350,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   groundSize: {x: 0.51, y: 0.53}
   dust: {fileID: 1917197471}
+  ShockWave: {fileID: 1896819226}
 --- !u!212 &1665484405
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5028,17 +5031,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6486883}
     m_Modifications:
+    - target: {fileID: 1061881264661765431, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1825186308061244061, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
       propertyPath: m_Name
       value: ShockWave
       objectReference: {fileID: 0}
+    - target: {fileID: 1825186308061244061, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7849158180379313328, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 7849158180379313328, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.3
+      value: -7.93
       objectReference: {fileID: 0}
     - target: {fileID: 7849158180379313328, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5070,6 +5081,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7849158180379313328, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960368237906850596, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
+      propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5475,6 +5490,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 0}
   Moving: {fileID: 1665484404}
+--- !u!198 &1896819226 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8960368237906850596, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
+  m_PrefabInstance: {fileID: 1801578822}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1912466237
 GameObject:
   m_ObjectHideFlags: 0
