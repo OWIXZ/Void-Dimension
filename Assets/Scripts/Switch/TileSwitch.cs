@@ -52,9 +52,9 @@ public class TileSwitch : MonoBehaviour
             BO1.enabled = !BO1.enabled;
         }
 
-        else if (RE1.enabled)
+       /* if (RE1.enabled)
         {
             Time.timeScale = 1f;
-        }
+        }*/
     }
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -30,7 +32,7 @@ public class Movement : MonoBehaviour
     [Header("Movement")]
     private float moveSpeed = 10f;
     [SerializeField] int jumpPower;
-    public bool canSwitch = true;
+    public bool canSwitch = false;
     [SerializeField] float SwitchingCooldown = 0.5f;
 
     bool isGrounded = false;
@@ -135,10 +137,10 @@ public class Movement : MonoBehaviour
             Player_Animator.SetBool("BoolRun", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch)
+        if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch ==true)
         {
+            StartCoroutine(Switch());
             ShockWave.Play();
-            Switch();
         }
            
     }
@@ -175,6 +177,8 @@ public class Movement : MonoBehaviour
             Player_Animator.SetBool("BoolDash", false);
         }
     }
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;

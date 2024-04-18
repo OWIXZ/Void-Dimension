@@ -22,7 +22,6 @@ public class TileSwitch2 : MonoBehaviour
     private CinemachineImpulseSource impulseSource;
     [SerializeField] private ScreenShake profile;
 
-    public bool Dimension2 = false;
     void Start()
     {
         impulseSource = GetComponent<CinemachineImpulseSource>();
@@ -51,23 +50,17 @@ public class TileSwitch2 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W) && canSwitch)
         {
-            Dimension2 = true;
             //CameraShakeManager.instance.CameraShake(impulseSource);
             CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
             StartCoroutine(Switch());
             RE2.enabled = !RE2.enabled;
             BO2.enabled = !BO2.enabled;
         }
-        
 
-        if (Dimension2 == false)
-        {
-            Time.timeScale = 1f;
-        }
-
-       else
+        /*if (RE2.enabled)
         {
             Time.timeScale = 1.5f;
-        }
+        }*/
+
     }
 }

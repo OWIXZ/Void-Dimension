@@ -5,7 +5,6 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
     [SerializeField] Movement Moving;
-    [SerializeField] TileSwitch2 Dimension;
 
     public GameObject pauseMenuUI;
     void Update()
@@ -25,7 +24,6 @@ public class PauseMenu : MonoBehaviour
 
     void Paused()
     {
-        
             Moving.isMooving = false;
             pauseMenuUI.SetActive(true);
             Time.timeScale = 0;
@@ -37,7 +35,7 @@ public class PauseMenu : MonoBehaviour
     {
             Moving.isMooving = true;
             pauseMenuUI.SetActive(false);
-            Time.timeScale = 1.5f;
+            Time.timeScale = 1f;
             gameIsPaused = false;
     }
 
