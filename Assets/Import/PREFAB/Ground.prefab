@@ -150,7 +150,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   rb: {fileID: 0}
   pauseMenu: {fileID: 0}
-  ShockWave: {fileID: 8960368237906850596, guid: a6bc8fc88c7bf554eb1a5045be1a0c4b, type: 3}
   profile: {fileID: 11400000, guid: ef85d6926c896354590a546e7fad0e34, type: 2}
 --- !u!114 &2174182816308195401
 MonoBehaviour:

@@ -9,7 +9,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     //-----------------ANIM-----------------
-
+    [Header("Animator")]
     [SerializeField] SpriteRenderer sprite_renderer;                                           //I enter the differents variables
     [SerializeField] Animator Player_Animator;                                                 //these bool variables allow me to bridge the gap between animation and code
 
@@ -33,13 +33,14 @@ public class Movement : MonoBehaviour
     private float moveSpeed = 10f;
     [SerializeField] int jumpPower;
     public bool canSwitch = false;
-    [SerializeField] float SwitchingCooldown = 0.5f;
+    [SerializeField] float SwitchingCooldown = 1;
 
     bool isGrounded = false;
     public bool isMooving = true;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rb;
 
+    [Header("Ground")]
     [SerializeField] private Transform groundPosition;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Vector2 groundSize;
@@ -49,6 +50,13 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem dust;
     [SerializeField] ParticleSystem ShockWave;
 
+    [Header("Sound")]
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     void Start()
     {
@@ -66,7 +74,7 @@ public class Movement : MonoBehaviour
 
     IEnumerator Dash()
     {
-        isMooving = false;
+        //isMooving = false;
         canDash = false;
         tm = Time.time;
         float originalGravity = rb.gravityScale;
@@ -83,7 +91,7 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         // Animator_player.SetBool("BoolDash", false);
         rb.gravityScale = originalGravity;
-        isMooving = true;
+        //isMooving = true;
         rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
@@ -137,10 +145,11 @@ public class Movement : MonoBehaviour
             Player_Animator.SetBool("BoolRun", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch ==true)
+        if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch == true)
         {
-            StartCoroutine(Switch());
+            audioManager.PlaySFX(audioManager.portal);
             ShockWave.Play();
+            StartCoroutine(Switch());
         }
            
     }
@@ -205,10 +214,12 @@ public class Movement : MonoBehaviour
     {
         if (collision.tag == "FallDetector")
         {
+            audioManager.PlaySFX(audioManager.death);
             transform.position = respawnPoint;
         }
         else if (collision.tag == "Checkpoint")
         {
+            audioManager.PlaySFX(audioManager.checkpoint);
             respawnPoint = transform.position;
         }
     }

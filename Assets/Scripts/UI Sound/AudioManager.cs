@@ -11,9 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip background;
     public AudioClip death;
     public AudioClip checkpoint;
-    public AudioClip wallTouch;
-    public AudioClip portalIn;
-    public AudioClip portalOut;
+    public AudioClip portal;
 
     private void Start()
     {

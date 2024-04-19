@@ -12,44 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861a4675dd2a6b8459a19a12635f6a86, type: 3}
   m_Name: Timer
   m_EditorClassIdentifier: 
-  impactTime: 0.2
-  impactForce: 0.1
-  defaultVelocity: {x: 0, y: 0.2, z: 0}
+  impactTime: 0.1
+  impactForce: 0.8
+  defaultVelocity: {x: 0, y: 0.1, z: 0}
   impulsCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0.045638014
-      outSlope: 0.045638014
+      inSlope: -0.08849924
+      outSlope: -0.08849924
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.19082674
-      value: 1.008709
-      inSlope: -0.017658046
-      outSlope: -0.017658046
+      time: 0.20030296
+      value: 0.98227334
+      inSlope: 0.017448265
+      outSlope: 0.017448265
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.49468383
-      value: 0.9841105
-      inSlope: 0.012587633
-      outSlope: 0.012587633
+      time: 0.5083333
+      value: 1.020283
+      inSlope: -0.016225785
+      outSlope: -0.016225785
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7235147
-      value: 1.0083961
-      inSlope: 0.037880972
-      outSlope: 0.037880972
+      time: 0.76041996
+      value: 0.98099595
+      inSlope: -0.038262505
+      outSlope: -0.038262505
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -57,8 +57,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: -0.03036743
-      outSlope: -0.03036743
+      inSlope: 0.07932233
+      outSlope: 0.07932233
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -66,6 +66,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ListenerAmplitude: 2
+  ListenerAmplitude: 0
   listenerFrequency: 3
   listenerDuration: 0.5
