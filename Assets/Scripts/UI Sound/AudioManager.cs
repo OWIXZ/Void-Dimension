@@ -12,6 +12,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip death;
     public AudioClip checkpoint;
     public AudioClip portal;
+    public AudioClip timersound;
+    public AudioClip shockwave;
+    public AudioClip dash;
+    public AudioClip jump;
 
     private void Start()
     {

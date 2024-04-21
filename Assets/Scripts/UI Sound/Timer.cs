@@ -10,8 +10,13 @@ public class Timer : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float remainingTime;
     private CinemachineImpulseSource impulseSource;
-
+    AudioManager audioManager;
     [SerializeField] private ScreenShake profile;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     private void Start()
     {
@@ -30,6 +35,8 @@ public class Timer : MonoBehaviour
             CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
             // GameOver();
             timerText.color = Color.red;
+            audioManager.PlaySFX(audioManager.timersound);
+            audioManager.PlaySFX(audioManager.shockwave);
         }
         if (remainingTime <= 1)
         {

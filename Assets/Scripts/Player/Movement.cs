@@ -49,6 +49,8 @@ public class Movement : MonoBehaviour
     [Header("Particule")]
     [SerializeField] ParticleSystem dust;
     [SerializeField] ParticleSystem ShockWave;
+    [SerializeField] ParticleSystem DashParticleR;
+    [SerializeField] ParticleSystem DashParticleL;
 
     [Header("Sound")]
     AudioManager audioManager;
@@ -82,12 +84,14 @@ public class Movement : MonoBehaviour
         if (spriteRenderer.flipX == true)
         {
             rb.velocity = Vector2.left * dashSpeed;
+            DashParticleL.Play();
         }
         else
         {
             rb.velocity = Vector2.right * dashSpeed;
+            DashParticleR.Play();
         }
-
+        
         yield return new WaitForSeconds(dashingTime);
         // Animator_player.SetBool("BoolDash", false);
         rb.gravityScale = originalGravity;
@@ -158,6 +162,7 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving && canJump)
         {
+            audioManager.PlaySFX(audioManager.jump);
             dust.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
@@ -175,6 +180,7 @@ public class Movement : MonoBehaviour
         //-----------------Dash-----------------  
         if (Input.GetKey(KeyCode.LeftShift) && canDash && isMooving && AbilitiesDash)
         {
+            audioManager.PlaySFX(audioManager.dash);
             StartCoroutine(Dash());
             Player_Animator.SetBool("BoolDash", true);
         }
