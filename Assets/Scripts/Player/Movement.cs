@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public CheckPoint checkpoint;
+
     //-----------------ANIM-----------------
     [Header("Animator")]
     [SerializeField] SpriteRenderer sprite_renderer;                                           //I enter the differents variables
@@ -26,7 +28,7 @@ public class Movement : MonoBehaviour
     private IEnumerator coroutine;
 
     [Header("Respawn")]
-    private Vector2 respawnPoint;
+    public Vector2 respawnPoint;
     public GameObject FallDetector;
 
     [Header("Movement")]
@@ -53,7 +55,7 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem DashParticleL;
 
     [Header("Sound")]
-    AudioManager audioManager;
+    public AudioManager audioManager;
 
     private void Awake()
     {
@@ -63,7 +65,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        respawnPoint = transform.position;
+       respawnPoint = transform.position;
     }
 
     void FixedUpdate()
@@ -216,16 +218,23 @@ public class Movement : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+   private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "FallDetector")
         {
             audioManager.PlaySFX(audioManager.death);
             transform.position = respawnPoint;
         }
-        else if (collision.tag == "Checkpoint")
+
+
+        if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == true)
         {
-            audioManager.PlaySFX(audioManager.checkpoint);
+            checkpoint.checkPointPass();
+            respawnPoint = transform.position;
+        }
+
+        if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == false)
+        {
             respawnPoint = transform.position;
         }
     }
