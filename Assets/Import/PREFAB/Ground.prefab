@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3858325289787399771}
   - component: {fileID: 3132675028130259711}
   - component: {fileID: 4729229719636085494}
-  - component: {fileID: 8989851032822103967}
   - component: {fileID: 2174182816308195401}
+  - component: {fileID: 3969113711293358474}
   m_Layer: 3
   m_Name: Ground
   m_TagString: Ground
@@ -132,25 +132,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8989851032822103967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058360293641169605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb02bff91796777439d4e77dd482682f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canSwitch: 1
-  SwitchingCooldown: 1
-  tm: 0
-  spriteRenderer: {fileID: 0}
-  rb: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  profile: {fileID: 11400000, guid: ef85d6926c896354590a546e7fad0e34, type: 2}
 --- !u!114 &2174182816308195401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,3 +185,22 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!114 &3969113711293358474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058360293641169605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29f79584c5c2d3d478c2ae076a46bb18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canSwitch: 1
+  SwitchingCooldown: 0.5
+  tm: 0
+  spriteRenderer: {fileID: 3132675028130259711}
+  rb: {fileID: 0}
+  profile: {fileID: 11400000, guid: ef85d6926c896354590a546e7fad0e34, type: 2}
+  ShockWave: {fileID: 0}

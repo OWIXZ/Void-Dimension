@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
@@ -117,6 +118,7 @@ public class Movement : MonoBehaviour
         canJump = true;
     }
 
+
     void PlayerOneController()
     {
         if (isMooving == true)
@@ -129,6 +131,8 @@ public class Movement : MonoBehaviour
             dashSpeed = 0f;
             moveSpeed = 0;
         }
+
+     
 
             //-----------------Deplacement -----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
 
@@ -150,6 +154,8 @@ public class Movement : MonoBehaviour
         {
             Player_Animator.SetBool("BoolRun", false);
         }
+
+
 
         if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch == true)
         {

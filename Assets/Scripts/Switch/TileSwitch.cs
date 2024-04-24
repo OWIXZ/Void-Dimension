@@ -1,23 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using Cinemachine;
-
 
 public class TileSwitch : MonoBehaviour
 {
     private SpriteRenderer RE1;
     private BoxCollider2D BO1;
     public bool canSwitch = true;
-    [SerializeField] float SwitchingCooldown = 0.5f;
+    [SerializeField] float SwitchingCooldown = 1;
     [SerializeField] float tm;
     private IEnumerator coroutine;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rb;
     private CinemachineImpulseSource impulseSource;
-    [SerializeField] PauseMenu pauseMenu;
     [SerializeField] private ScreenShake profile;
+
+    //[SerializeField] ParticleSystem ShockWave;
 
     void Start()
     {
@@ -46,15 +44,11 @@ public class TileSwitch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W) && canSwitch)
         {
+            //ShockWave.Play();
             CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
             StartCoroutine(Switch());
             RE1.enabled = !RE1.enabled;
             BO1.enabled = !BO1.enabled;
         }
-
-       /* if (RE1.enabled)
-        {
-            Time.timeScale = 1f;
-        }*/
     }
 }

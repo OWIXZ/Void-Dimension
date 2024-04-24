@@ -8,19 +8,20 @@ using UnityEngine.Tilemaps;
 
 public class TileSwitch2 : MonoBehaviour
 {
-    public PauseMenu Pause;
-
-
     private SpriteRenderer RE2;
     private BoxCollider2D BO2;
     public bool canSwitch = true;
-    [SerializeField] float SwitchingCooldown = 0.5f;
+    [SerializeField] float SwitchingCooldown = 1;
     [SerializeField] float tm;
     private IEnumerator coroutine;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rb;
     private CinemachineImpulseSource impulseSource;
     [SerializeField] private ScreenShake profile;
+
+    //[SerializeField] ParticleSystem ShockWave;
+
+
 
     void Start()
     {
@@ -50,17 +51,11 @@ public class TileSwitch2 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W) && canSwitch)
         {
-            //CameraShakeManager.instance.CameraShake(impulseSource);
+            //ShockWave.Play();
             CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
             StartCoroutine(Switch());
             RE2.enabled = !RE2.enabled;
             BO2.enabled = !BO2.enabled;
         }
-
-        /*if (RE2.enabled)
-        {
-            Time.timeScale = 1.5f;
-        }*/
-
     }
 }
