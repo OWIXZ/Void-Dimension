@@ -20,13 +20,19 @@ public class Movement : MonoBehaviour
     [Header("Dashing proprieties")]
     [SerializeField] bool canJump = true;
     [SerializeField] bool canDash = true;
+    [SerializeField] bool isDashing;
+    [SerializeField] private bool canJumpAfterDash = true;
+    public bool isJumping = false;
     public bool AbilitiesDash = false;
-    private float dashSpeed = 15f;
-    private float dashingTime = 0.4f;
-    private float dashingCooldown = 1f;
+    private float dashingCooldown = 0.5f;
     private float JumpingCooldown = 1.1f;
+    private float startDashTime = 1f;
     private float tm;
     private IEnumerator coroutine;
+
+
+    private float horizontal;
+    private bool isFacingRight = true;
 
     [Header("Respawn")]
     public Vector2 respawnPoint;
@@ -52,14 +58,14 @@ public class Movement : MonoBehaviour
     [Header("Particule")]
     [SerializeField] ParticleSystem dust;
     [SerializeField] ParticleSystem ShockWave;
-    [SerializeField] ParticleSystem DashParticleR;
-    [SerializeField] ParticleSystem DashParticleL;
+    [SerializeField] ParticleSystem DashParticle;
 
     [Header("Sound")]
     public AudioManager audioManager;
 
     private void Awake()
     {
+        isFacingRight = true;
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
@@ -69,40 +75,62 @@ public class Movement : MonoBehaviour
        respawnPoint = transform.position;
     }
 
+
+    void Update()
+    {
+        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
+        if (!isFacingRight && horizontal > 0f)
+        {
+            Flip();
+        }
+        else if (isFacingRight && horizontal < 0f)
+        {
+            Flip();
+        }
+    }
+
+
     void FixedUpdate()
     {
         Ground_Detection();
         PlayerOneController();
-        Jump();
-        DashAction();
     }
 
-    IEnumerator Dash()
+
+
+    IEnumerator Dash(Vector2 direction)
     {
-        //isMooving = false;
         canDash = false;
-        tm = Time.time;
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-        if (spriteRenderer.flipX == true)
+        isDashing = true;
+        canJumpAfterDash = false;  // Désactiver la capacité de sauter immédiatement après le dash
+        Player_Animator.SetBool("BoolDash", true);
+
+        float localDashTime = 0.4f;
+        float enhancedDashSpeed = 20f;
+        DashParticle.Play();
+
+        while (localDashTime > 0f)
         {
-            rb.velocity = Vector2.left * dashSpeed;
-            DashParticleL.Play();
+            localDashTime -= Time.deltaTime;
+            rb.velocity = direction * enhancedDashSpeed;
+            yield return null;
         }
-        else
-        {
-            rb.velocity = Vector2.right * dashSpeed;
-            DashParticleR.Play();
-        }
-        
-        yield return new WaitForSeconds(dashingTime);
-        // Animator_player.SetBool("BoolDash", false);
-        rb.gravityScale = originalGravity;
-        //isMooving = true;
-        rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
+
+        rb.velocity = new Vector2(0f, 0f);
+        Player_Animator.SetBool("BoolDash", false);
+        isDashing = false;
+
+        yield return new WaitForSeconds(0.1f); // Attendre 0.1 seconde avant de permettre de nouveau le saut
+        canJumpAfterDash = true;  // Réactiver la capacité de sauter
+
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
+
+
+
+
+
 
     IEnumerator Switch()
     {
@@ -118,42 +146,29 @@ public class Movement : MonoBehaviour
         canJump = true;
     }
 
+    IEnumerator JumpAnim()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Player_Animator.SetBool("BoolJump", false);
+    }
+
+
 
     void PlayerOneController()
     {
+
+
         if (isMooving == true)
         {
-            dashSpeed = 15f;
             moveSpeed = 10f;
         }
         if (isMooving == false)
         {
-            dashSpeed = 0f;
             moveSpeed = 0;
         }
 
      
 
-            //-----------------Deplacement -----------------                                                                                                  //when I press the chosen keys, I can move around and launch the corresponding animation
-
-
-            if (Input.GetKey(KeyCode.D) && isMooving)
-        {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-            Player_Animator.SetBool("BoolRun", true);
-            sprite_renderer.flipX = false;                                                                          //flip the direction of the animation 
-        }
-
-        else if (Input.GetKey(KeyCode.A) && isMooving)
-        {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-            Player_Animator.SetBool("BoolRun", true);
-            sprite_renderer.flipX = true;                                                                            //flip the direction of the animation
-        }
-        else                                                                                                        //I make sure that when I release the key, the animation ends.
-        {
-            Player_Animator.SetBool("BoolRun", false);
-        }
 
 
 
@@ -166,40 +181,99 @@ public class Movement : MonoBehaviour
            
     }
 
-    private void Jump()
+
+
+
+    //-----------------FLIP-----------------
+
+
+    private void Flip()                                                      // ============== FLIP [NEW]
     {
-        if (Input.GetKey(KeyCode.Space) && isGrounded && isMooving && canJump)
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
+    }
+
+
+
+
+    //-----------------MOVEMENT-----------------
+
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        if (isMooving)
         {
-            audioManager.PlaySFX(audioManager.jump);
-            dust.Play();
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-            Player_Animator.SetBool("BoolJump", true);                                                             //play jump animation
-            StartCoroutine(JumpCo());
+            horizontal = context.ReadValue<Vector2>().x;
+            Player_Animator.SetBool("BoolRun", true);
         }
 
-        else                                                                                                                           //I make sure that when I release the key, the animation ends.
+        if (context.canceled)
         {
-            Player_Animator.SetBool("BoolJump", false);
+            Player_Animator.SetBool("BoolRun", false);
         }
     }
 
-    private void DashAction()
+
+
+
+
+    //-----------------JUMP-----------------
+
+
+
+
+    public void Jump(InputAction.CallbackContext context)
     {
-        //-----------------Dash-----------------  
-        if (Input.GetKey(KeyCode.LeftShift) && canDash && isMooving && AbilitiesDash)
+        if (isGrounded && isMooving && canJump && canJumpAfterDash)  // Vérifier également canJumpAfterDash
         {
-            audioManager.PlaySFX(audioManager.dash);
-            StartCoroutine(Dash());
-            Player_Animator.SetBool("BoolDash", true);
-        }
-
-        //-----------------Animation-----------------
-
-        else                                                                                                                           //I make sure that when I release the key, the animation ends.
-        {
-            Player_Animator.SetBool("BoolDash", false);
+            if (context.performed)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+                Player_Animator.SetBool("BoolJump", true);
+                audioManager.PlaySFX(audioManager.jump);
+                dust.Play();
+                isJumping = true;
+                StartCoroutine(JumpCo());
+                StartCoroutine(JumpAnim());
+            }
         }
     }
+
+
+
+
+
+
+
+    //-----------------DASH-----------------
+
+    public void Dash(InputAction.CallbackContext context)                  // ============== NEW DASHING SYSTEM
+    {
+        if (canDash && isMooving && AbilitiesDash)
+        {
+            if (context.performed && canDash == true && isDashing == false)
+            {
+                if (isFacingRight && canDash == true && isDashing == false)
+                {
+                    audioManager.PlaySFX(audioManager.dash);
+                    Player_Animator.SetBool("BoolDash", true);
+                    StartCoroutine(Dash(Vector2.right));
+                }
+                else if (!isFacingRight && canDash == true && isDashing == false)
+                {
+                    audioManager.PlaySFX(audioManager.dash);
+                    Player_Animator.SetBool("BoolDash", true);
+                    StartCoroutine(Dash(Vector2.left));
+                }
+            }
+        }
+    }
+
+
+    //-----------------GROUND-----------------
+
 
 
     private void OnDrawGizmos()
@@ -224,7 +298,18 @@ public class Movement : MonoBehaviour
             }
         }
     }
-   private void OnTriggerEnter2D(Collider2D collision)
+
+
+
+
+
+
+    //-----------------COLLIDER-----------------
+
+
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "FallDetector")
         {
@@ -246,8 +331,13 @@ public class Movement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       
+        if (collision.gameObject.CompareTag("Ground") && isJumping)
+        {
+            Player_Animator.SetBool("BoolJump", false);
+            isJumping = false;
+        }
     }
+
 }
 
 
