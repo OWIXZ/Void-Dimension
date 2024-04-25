@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -412,6 +412,10 @@ PrefabInstance:
       propertyPath: ShockWave
       value: 
       objectReference: {fileID: 1896819226}
+    - target: {fileID: 4729229719636085494, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
     - target: {fileID: 8989851032822103967, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: ShockWave
       value: 
@@ -1734,7 +1738,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 324374774}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2076,7 +2080,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 391978211}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3003,7 +3007,7 @@ GameObject:
   - component: {fileID: 702511201}
   - component: {fileID: 702511200}
   m_Layer: 3
-  m_Name: Ground (3)
+  m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3033,7 +3037,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 702511198}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3271,6 +3275,10 @@ PrefabInstance:
       propertyPath: ShockWave
       value: 
       objectReference: {fileID: 1896819226}
+    - target: {fileID: 4729229719636085494, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
     - target: {fileID: 8989851032822103967, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: ShockWave
       value: 
@@ -4974,7 +4982,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1087659264}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5515,6 +5523,10 @@ PrefabInstance:
       propertyPath: ShockWave
       value: 
       objectReference: {fileID: 1896819226}
+    - target: {fileID: 4729229719636085494, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
     - target: {fileID: 8989851032822103967, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: ShockWave
       value: 
@@ -6354,7 +6366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 148300077}
-  remainingTime: 300
+  remainingTime: 65
   profile: {fileID: 11400000, guid: 7f313dfe21a349348be5e467f1a9ff1c, type: 2}
 --- !u!114 &1577184557
 MonoBehaviour:
@@ -6450,7 +6462,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1583114676}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -7023,6 +7035,7 @@ MonoBehaviour:
   canJump: 1
   canDash: 1
   isDashing: 0
+  canJumpAfterDash: 1
   isJumping: 1
   AbilitiesDash: 0
   respawnPoint: {x: 0, y: 0}
@@ -8038,7 +8051,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1782392164}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -8582,7 +8595,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1873304987}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9378,9 +9391,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: 1920x1080
       m_Image: {fileID: 0}
-    - m_Text: 2560x1440
-      m_Image: {fileID: 0}
-    - m_Text: 3840x2160
+    - m_Text: 2560x1080
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

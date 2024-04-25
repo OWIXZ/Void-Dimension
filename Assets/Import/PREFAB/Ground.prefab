@@ -96,7 +96,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1058360293641169605}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -203,4 +203,3 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3132675028130259711}
   rb: {fileID: 0}
   profile: {fileID: 11400000, guid: ef85d6926c896354590a546e7fad0e34, type: 2}
-  ShockWave: {fileID: 0}

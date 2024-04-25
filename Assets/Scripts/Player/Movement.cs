@@ -25,7 +25,7 @@ public class Movement : MonoBehaviour
     public bool isJumping = false;
     public bool AbilitiesDash = false;
     private float dashingCooldown = 0.5f;
-    private float JumpingCooldown = 1.1f;
+    private float JumpingCooldown = 0.5f;
     private float startDashTime = 1f;
     private float tm;
     private IEnumerator coroutine;

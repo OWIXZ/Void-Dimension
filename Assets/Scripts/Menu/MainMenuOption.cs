@@ -4,25 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Option : MonoBehaviour
+public class MainMenuOption : MonoBehaviour
 {
     public GameObject Panel;
     bool visible = false;
 
     public TMP_Dropdown DResolution;
-    public AudioSource audiosource;
-    public AudioSource SFX;
-    public Slider SliderV;
-    public Slider SliderSFX;
-    public TMP_Text TxtVolume;
-    public TMP_Text TxtSFX;
     public bool test = false;
 
-    private void Start()
-    {
-        SliderChange();
-        SliderChangeSFX();
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P) && test)
@@ -51,7 +40,7 @@ public class Option : MonoBehaviour
                 break;
 
             case 2:
-                Screen.SetResolution(1440, 900, true);
+                Screen.SetResolution(1440 , 900, true);
                 break;
 
             case 3:
@@ -62,21 +51,12 @@ public class Option : MonoBehaviour
                 Screen.SetResolution(2560, 1080, true);
                 break;
 
+
             default:
-                Screen.SetResolution(1920, 1080, true);
-                break;
+            Screen.SetResolution(1920,1080, true);
+
+
+            break;
         }
-    }
-
-    public void SliderChange()
-    {
-        audiosource.volume = SliderV.value;
-        TxtVolume.text = "Volume" + (audiosource.volume * 100).ToString("  00") + "%";
-    }
-
-    public void SliderChangeSFX()
-    {
-        SFX.volume = SliderSFX.value;
-        TxtSFX.text = "SFX" + (SFX.volume * 100).ToString("     00") + "%";
     }
 }
