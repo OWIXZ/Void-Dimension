@@ -1,22 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    public CheckPoint checkpoint;
-
-    //-----------------ANIM-----------------
     [Header("Animator")]
-    [SerializeField] SpriteRenderer sprite_renderer;                                           //I enter the differents variables
-    [SerializeField] Animator Player_Animator;                                                 //these bool variables allow me to bridge the gap between animation and code
+    [SerializeField] SpriteRenderer sprite_renderer;
+    [SerializeField] Animator Player_Animator;
 
-    //-----------------MOVEMENT-----------------
     [Header("Dashing proprieties")]
     [SerializeField] bool canJump = true;
     [SerializeField] bool canDash = true;
@@ -30,15 +21,16 @@ public class Movement : MonoBehaviour
     private float tm;
     private IEnumerator coroutine;
 
-
     private float horizontal;
     private bool isFacingRight = true;
 
     [Header("Respawn")]
     public Vector2 respawnPoint;
     public GameObject FallDetector;
+    public CheckPoint checkpoint;
 
     [Header("Movement")]
+
     private float moveSpeed = 10f;
     [SerializeField] int jumpPower;
     public bool canSwitch = false;
@@ -53,7 +45,6 @@ public class Movement : MonoBehaviour
     [SerializeField] private Transform groundPosition;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Vector2 groundSize;
-
 
     [Header("Particule")]
     [SerializeField] ParticleSystem dust;
@@ -72,9 +63,8 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       respawnPoint = transform.position;
+        respawnPoint = transform.position;
     }
-
 
     void Update()
     {
@@ -87,11 +77,8 @@ public class Movement : MonoBehaviour
         {
             Flip();
         }
-
-
         Fall();
     }
-
 
     void FixedUpdate()
     {
@@ -99,14 +86,12 @@ public class Movement : MonoBehaviour
         PlayerOneController();
     }
 
-
-
     IEnumerator Dash(Vector2 direction)
     {
         isMooving = false;
         canDash = false;
         isDashing = true;
-        canJumpAfterDash = false;  // Désactiver la capacité de sauter immédiatement après le dash
+        canJumpAfterDash = false;
         Player_Animator.SetBool("BoolDash", true);
         rb.gravityScale = 0f;
 
@@ -127,17 +112,12 @@ public class Movement : MonoBehaviour
         isMooving = true;
         rb.gravityScale = 1.7f;
 
-        yield return new WaitForSeconds(0.1f); // Attendre 0.1 seconde avant de permettre de nouveau le saut
-        canJumpAfterDash = true;  // Réactiver la capacité de sauter
+        yield return new WaitForSeconds(0.1f);
+        canJumpAfterDash = true;
 
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
-
-
-
-
-
 
     IEnumerator Switch()
     {
@@ -146,6 +126,7 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(SwitchingCooldown);
         canSwitch = true;
     }
+
     IEnumerator JumpCo()
     {
         canJump = false;
@@ -159,12 +140,8 @@ public class Movement : MonoBehaviour
         Player_Animator.SetBool("BoolJump", false);
     }
 
-
-
     void PlayerOneController()
     {
-
-
         if (isMooving == true)
         {
             moveSpeed = 10f;
@@ -173,28 +150,15 @@ public class Movement : MonoBehaviour
         {
             moveSpeed = 0;
         }
-
-     
-
-
-
-
         if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch == true)
         {
             audioManager.PlaySFX(audioManager.portal);
             ShockWave.Play();
             StartCoroutine(Switch());
         }
-           
     }
 
-
-
-
-    //-----------------FLIP-----------------
-
-
-    private void Flip()                                                      // ============== FLIP [NEW]
+    private void Flip()
     {
         isFacingRight = !isFacingRight;
         Vector3 localScale = transform.localScale;
@@ -202,10 +166,9 @@ public class Movement : MonoBehaviour
         transform.localScale = localScale;
     }
 
-
     private void Fall()
     {
-        if (isGrounded == false && rb.velocity.y < 0f)
+        if (!isGrounded && rb.velocity.y < 0f)
         {
             Player_Animator.SetBool("BoolFall", true);
         }
@@ -215,9 +178,6 @@ public class Movement : MonoBehaviour
         }
     }
 
-    //-----------------MOVEMENT-----------------
-
-
     public void Move(InputAction.CallbackContext context)
     {
         if (isMooving)
@@ -225,26 +185,15 @@ public class Movement : MonoBehaviour
             horizontal = context.ReadValue<Vector2>().x;
             Player_Animator.SetBool("BoolRun", true);
         }
-
         if (context.canceled)
         {
             Player_Animator.SetBool("BoolRun", false);
         }
     }
 
-
-
-
-
-
-    //-----------------JUMP-----------------
-
-
-
-
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded && isMooving && canJump && canJumpAfterDash)  // Vérifier également canJumpAfterDash
+        if (isGrounded && isMooving && canJump && canJumpAfterDash)
         {
             if (context.performed)
             {
@@ -259,73 +208,32 @@ public class Movement : MonoBehaviour
         }
     }
 
-
-
-
-
-
-
-    //-----------------DASH-----------------
-
-    public void Dash(InputAction.CallbackContext context)                  // ============== NEW DASHING SYSTEM
+    public void Dash(InputAction.CallbackContext context)
     {
         if (canDash && isMooving && AbilitiesDash)
         {
-            if (context.performed && canDash == true && isDashing == false)
+            if (context.performed && isDashing == false)
             {
-                if (isFacingRight && canDash == true && isDashing == false)
-                {
-                    audioManager.PlaySFX(audioManager.dash);
-                    Player_Animator.SetBool("BoolDash", true);
-                    StartCoroutine(Dash(Vector2.right));
-                }
-                else if (!isFacingRight && canDash == true && isDashing == false)
-                {
-                    audioManager.PlaySFX(audioManager.dash);
-                    Player_Animator.SetBool("BoolDash", true);
-                    StartCoroutine(Dash(Vector2.left));
-                }
+                Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
+                audioManager.PlaySFX(audioManager.dash);
+                Player_Animator.SetBool("BoolDash", true);
+                StartCoroutine(Dash(direction));
             }
         }
     }
 
-
-    //-----------------GROUND-----------------
-
-
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(groundPosition.position, groundSize);
-    }
-
     private void Ground_Detection()
     {
-
-        Collider2D[] Wall_Detection = Physics2D.OverlapBoxAll(groundPosition.position, groundSize, groundLayer);
-
+        Collider2D[] Wall_Detection = Physics2D.OverlapBoxAll(groundPosition.position, groundSize, 0, groundLayer);
         isGrounded = false;
-
         foreach (var Object in Wall_Detection)
         {
-
             if (Object.tag == "Ground")
             {
                 isGrounded = true;
             }
         }
     }
-
-
-
-
-
-
-    //-----------------COLLIDER-----------------
-
-
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -334,22 +242,20 @@ public class Movement : MonoBehaviour
             audioManager.PlaySFX(audioManager.death);
             transform.position = respawnPoint;
         }
-
-
-        if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == true)
+        else if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == true)
         {
             checkpoint.checkPointPass();
             respawnPoint = transform.position;
         }
-
-        if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == false)
+        else if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == false)
         {
             respawnPoint = transform.position;
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision detected with: " + collision.gameObject.name);  // Ajouter pour tester
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Ground") && isJumping)
         {
             Player_Animator.SetBool("BoolJump", false);
@@ -357,5 +263,3 @@ public class Movement : MonoBehaviour
         }
     }
 }
-
-

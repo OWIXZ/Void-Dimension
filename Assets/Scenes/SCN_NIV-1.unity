@@ -517,6 +517,8 @@ GameObject:
   - component: {fileID: 39744279}
   - component: {fileID: 39744278}
   - component: {fileID: 39744277}
+  - component: {fileID: 39744281}
+  - component: {fileID: 39744282}
   m_Layer: 3
   m_Name: Ground (3)
   m_TagString: Ground
@@ -676,6 +678,79 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &39744281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39744275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9207b6c95c15e624783db7604835fb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canSwitch: 1
+  SwitchingCooldown: 1
+  tm: 0
+  rb: {fileID: 0}
+  profile: {fileID: 11400000, guid: ef85d6926c896354590a546e7fad0e34, type: 2}
+  ShockWave: {fileID: 1896819226}
+  audioManager: {fileID: 1453977145}
+  currentMode: 1
+--- !u!114 &39744282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39744275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 1
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &49358631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,7 +2036,9 @@ MonoBehaviour:
   tm: 0
   rb: {fileID: 0}
   profile: {fileID: 11400000, guid: ef85d6926c896354590a546e7fad0e34, type: 2}
-  currentMode: 1
+  ShockWave: {fileID: 1896819226}
+  audioManager: {fileID: 1453977145}
+  currentMode: 0
 --- !u!114 &320726080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7669,7 +7746,6 @@ MonoBehaviour:
     m_Bits: 4294967295
   groundSize: {x: 0.51, y: 0.53}
   dust: {fileID: 1917197471}
-  ShockWave: {fileID: 1896819226}
   DashParticle: {fileID: 1131746837}
   audioManager: {fileID: 1453977145}
 --- !u!212 &1665484405

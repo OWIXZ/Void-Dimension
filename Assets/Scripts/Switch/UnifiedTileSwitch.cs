@@ -13,7 +13,10 @@ public class UnifiedTileSwitch : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     private CinemachineImpulseSource impulseSource;
     [SerializeField] private ScreenShake profile;
-    //[SerializeField] ParticleSystem ShockWave;
+    [SerializeField] ParticleSystem ShockWave;
+
+    [Header("Sound")]
+    public AudioManager audioManager;
 
     // Mode selection
     public enum Mode { Mode1, Mode2 }
@@ -21,6 +24,7 @@ public class UnifiedTileSwitch : MonoBehaviour
 
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         rendererUni = GetComponent<SpriteRenderer>();
         colliderUni = GetComponent<BoxCollider2D>();
@@ -58,7 +62,8 @@ public class UnifiedTileSwitch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B) && canSwitch)
         {
-            //ShockWave.Play();
+            ShockWave.Play();
+            audioManager.PlaySFX(audioManager.portal);
             CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
             StartCoroutine(Switch());
             rendererUni.enabled = !rendererUni.enabled;
@@ -70,7 +75,8 @@ public class UnifiedTileSwitch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B) && canSwitch)
         {
-            //ShockWave.Play();
+            ShockWave.Play();
+            audioManager.PlaySFX(audioManager.portal);
             CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
             StartCoroutine(Switch());
             rendererUni.enabled = !rendererUni.enabled;
