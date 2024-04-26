@@ -196,7 +196,17 @@ public class Movement : MonoBehaviour
     }
 
 
-
+    private void FALL()
+    {
+        if (isGrounded == false && isJumping == true)
+        {
+            Player_Animator.SetBool("BoolFall", true);
+        }
+        else
+        {
+            Player_Animator.SetBool("BoolFall", false);
+        }
+    }
 
     //-----------------MOVEMENT-----------------
 
@@ -214,6 +224,7 @@ public class Movement : MonoBehaviour
             Player_Animator.SetBool("BoolRun", false);
         }
     }
+
 
 
 
@@ -331,13 +342,13 @@ public class Movement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Collision detected with: " + collision.gameObject.name);  // Ajouter pour tester
         if (collision.gameObject.CompareTag("Ground") && isJumping)
         {
             Player_Animator.SetBool("BoolJump", false);
             isJumping = false;
         }
     }
-
 }
 
 
