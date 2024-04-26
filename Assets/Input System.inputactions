@@ -125,7 +125,7 @@
                 {
                     "name": "",
                     "id": "82fff623-57de-4def-a429-115e838b53ee",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -137,12 +137,12 @@
         },
         {
             "name": "Pause",
-            "id": "7c5cd38d-388f-436f-817a-17627dd37002",
+            "id": "71aaac96-c2a8-4d1d-a385-33bd6f7db7fa",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "4a0d4976-ef99-4a02-8bf7-7ebf8b550d7a",
+                    "id": "4a65aaae-ec84-4634-b41d-05b408bb3c84",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -152,12 +152,62 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "0b89a256-7a8e-46b8-8daa-ec34eda1fabc",
-                    "path": "",
+                    "id": "ab699d1e-90bf-44e1-9917-5803da59f79c",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0394bcc1-8615-4fc1-b0ad-7c5a0d6d103c",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Switch",
+            "id": "f64f264d-2e44-4f2d-abc3-52ed0bd7f7c6",
+            "actions": [
+                {
+                    "name": "Switch",
+                    "type": "Button",
+                    "id": "91619cf2-d036-41b7-bbab-7a5cae3d8d80",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d914d702-4154-47c5-9566-4002f90622f7",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3e0019e-244f-4b03-8102-0a7fd7f86f0f",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

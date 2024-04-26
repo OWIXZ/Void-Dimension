@@ -1,17 +1,19 @@
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
     [SerializeField] Movement Moving;
-
     public GameObject pauseMenuUI;
-    void Update()
+
+    public void Pause(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (context.performed)
         {
-            if(gameIsPaused)
+            if (gameIsPaused)
             {
                 Resume();
             }
@@ -21,6 +23,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
+
 
     void Paused()
     {

@@ -87,6 +87,9 @@ public class Movement : MonoBehaviour
         {
             Flip();
         }
+
+
+        Fall();
     }
 
 
@@ -100,10 +103,12 @@ public class Movement : MonoBehaviour
 
     IEnumerator Dash(Vector2 direction)
     {
+        isMooving = false;
         canDash = false;
         isDashing = true;
         canJumpAfterDash = false;  // Désactiver la capacité de sauter immédiatement après le dash
         Player_Animator.SetBool("BoolDash", true);
+        rb.gravityScale = 0f;
 
         float localDashTime = 0.4f;
         float enhancedDashSpeed = 20f;
@@ -119,6 +124,8 @@ public class Movement : MonoBehaviour
         rb.velocity = new Vector2(0f, 0f);
         Player_Animator.SetBool("BoolDash", false);
         isDashing = false;
+        isMooving = true;
+        rb.gravityScale = 1.7f;
 
         yield return new WaitForSeconds(0.1f); // Attendre 0.1 seconde avant de permettre de nouveau le saut
         canJumpAfterDash = true;  // Réactiver la capacité de sauter
@@ -196,9 +203,9 @@ public class Movement : MonoBehaviour
     }
 
 
-    private void FALL()
+    private void Fall()
     {
-        if (isGrounded == false && isJumping == true)
+        if (isGrounded == false && rb.velocity.y < 0f)
         {
             Player_Animator.SetBool("BoolFall", true);
         }

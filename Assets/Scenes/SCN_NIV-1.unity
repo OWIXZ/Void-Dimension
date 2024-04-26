@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -423,7 +423,7 @@ PrefabInstance:
     - target: {fileID: 8989851032822103967, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: pauseMenu
       value: 
-      objectReference: {fileID: 926432935}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -737,7 +737,7 @@ Transform:
   m_GameObject: {fileID: 130533299}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8342285, y: 0.25006104, z: -0.10950695}
+  m_LocalPosition: {x: -1.8342285, y: -0.4, z: -0.10950695}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 926432935}
+      - m_Target: {fileID: 1070368667}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
@@ -1823,6 +1823,8 @@ GameObject:
   - component: {fileID: 320726076}
   - component: {fileID: 320726078}
   - component: {fileID: 320726077}
+  - component: {fileID: 320726079}
+  - component: {fileID: 320726080}
   m_Layer: 3
   m_Name: Ground (6)
   m_TagString: Ground
@@ -1942,6 +1944,77 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &320726079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320726075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9207b6c95c15e624783db7604835fb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canSwitch: 1
+  SwitchingCooldown: 1
+  tm: 0
+  rb: {fileID: 0}
+  profile: {fileID: 11400000, guid: ef85d6926c896354590a546e7fad0e34, type: 2}
+  currentMode: 1
+--- !u!114 &320726080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320726075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 1
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &324374774
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,7 +3531,7 @@ PrefabInstance:
     - target: {fileID: 8989851032822103967, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: pauseMenu
       value: 
-      objectReference: {fileID: 926432935}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4060,52 +4133,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919359219}
   m_CullTransparentMesh: 1
---- !u!1 &926432934
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 926432936}
-  - component: {fileID: 926432935}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &926432935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 926432934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c86732a02282b764a875e61d3c21e2d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Moving: {fileID: 1665484404}
-  pauseMenuUI: {fileID: 1668807233}
---- !u!4 &926432936
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 926432934}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -376.3466, y: -546.83124, z: -70.34921}
-  m_LocalScale: {x: 1.7815899, y: 1.7815899, z: 1.7815899}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1912466238}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4795,6 +4822,8 @@ GameObject:
   - component: {fileID: 1070368663}
   - component: {fileID: 1070368662}
   - component: {fileID: 1070368665}
+  - component: {fileID: 1070368667}
+  - component: {fileID: 1070368666}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4910,6 +4939,78 @@ MonoBehaviour:
   TxtVolume: {fileID: 859059156}
   TxtSFX: {fileID: 1872612100}
   test: 0
+--- !u!114 &1070368666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070368660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 0499a5a6d03ad2840a64b5d3eb0d0386, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 68c0f6ce-624e-4918-9780-39876c03481d
+    m_ActionName: Player/Move[/Keyboard/a,/DualSenseGamepadHID/leftStick/left,/Keyboard/d,/DualSenseGamepadHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5e80278c-0fd1-4691-b875-a7eafa6586e1
+    m_ActionName: Player/Jump[/Keyboard/space,/DualSenseGamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 39a50697-e1ff-4a14-ac64-1f196d1d3308
+    m_ActionName: Player/Dash[/Keyboard/shift,/DualSenseGamepadHID/buttonWest]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1070368667}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4a65aaae-ec84-4634-b41d-05b408bb3c84
+    m_ActionName: Pause/Pause[/Keyboard/escape,/DualSenseGamepadHID/start]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Pause
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1070368667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070368660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86732a02282b764a875e61d3c21e2d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Moving: {fileID: 1665484404}
+  pauseMenuUI: {fileID: 1668807233}
 --- !u!1 &1070484757
 GameObject:
   m_ObjectHideFlags: 0
@@ -5821,7 +5922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3858325289787399771, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.822345
+      value: 9.25364
       objectReference: {fileID: 0}
     - target: {fileID: 3858325289787399771, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5870,7 +5971,7 @@ PrefabInstance:
     - target: {fileID: 4729229719636085494, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 6200000, guid: 2607db2869b99a248b0f293094ae70e3, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8989851032822103967, guid: 5fc4cd27d9059054e9db0afb4b4ce2ca, type: 3}
       propertyPath: ShockWave
       value: 
@@ -7734,10 +7835,6 @@ MonoBehaviour:
     m_ActionId: 5e80278c-0fd1-4691-b875-a7eafa6586e1
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4a0d4976-ef99-4a02-8bf7-7ebf8b550d7a
-    m_ActionName: Pause/New action
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1665484404}
         m_TargetAssemblyTypeName: Movement, Assembly-CSharp
@@ -7753,6 +7850,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 39a50697-e1ff-4a14-ac64-1f196d1d3308
     m_ActionName: Player/Dash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4a65aaae-ec84-4634-b41d-05b408bb3c84
+    m_ActionName: Pause/Pause[/Keyboard/escape,/DualSenseGamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -8034,7 +8135,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 926432935}
+      - m_Target: {fileID: 1070368667}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: LoadMainMenu
         m_Mode: 1
@@ -9288,7 +9389,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1034785463}
-  - {fileID: 926432936}
   - {fileID: 1453977144}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
