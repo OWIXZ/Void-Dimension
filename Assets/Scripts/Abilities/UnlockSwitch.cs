@@ -1,66 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class UnlockSwitch : MonoBehaviour
+public class UnlockSwitchTrigger : MonoBehaviour
 {
-    private TileSwitch[] tileSwitches;    // Array to hold all TileSwitch scripts in the scene
-    private TileSwitch2[] tileSwitches2;  // Array to hold all TileSwitch2 scripts in the scene
+    public UnifiedTileSwitch switchController;
+    public PlayerInput playerInput;  // Ajouter une référence publique à PlayerInput
 
-    void Awake()
+    void Start()
     {
-        // Find all TileSwitch and TileSwitch2 scripts in the scene
-        tileSwitches = FindObjectsOfType<TileSwitch>();
-        tileSwitches2 = FindObjectsOfType<TileSwitch2>();
-
-        // Disable all found scripts
-        DisableComponents();
-    }
-
-    void DisableComponents()
-    {
-        foreach (var switchScript in tileSwitches)
+        // Désactiver la possibilité de switch au début, désactiver Dimension2 et les entrées du joueur
+        if (switchController != null)
         {
-            switchScript.enabled = false;  // Disables the TileSwitch script
+            switchController.enabled = false;
+            switchController.SetLayerVisibility("Dimension2", false);  // Désactiver Dimension2 dès le début
         }
-        foreach (var switchScript2 in tileSwitches2)
+        if (playerInput != null)
         {
-            switchScript2.enabled = false; // Disables the TileSwitch2 script
-
-            // Also disable BoxCollider2D and SpriteRenderer for these objects
-            var boxCollider = switchScript2.GetComponent<BoxCollider2D>();
-            var spriteRenderer = switchScript2.GetComponent<SpriteRenderer>();
-            if (boxCollider) boxCollider.enabled = false;
-            if (spriteRenderer) spriteRenderer.enabled = false;
+            playerInput.enabled = false;  // Désactiver Player Input au début
+            Debug.Log("Player input disabled at start.");
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag("Player"))
+        // Vérifier si l'objet entrant est le joueur
+        if (other.CompareTag("Player"))
         {
-            // Reactivate all the scripts when the player collides with this object
-            ReactivateComponents();
-            Destroy(gameObject);  // Destroy the current object after reactivating components
-        }
-    }
+            // Activer le script UnifiedTileSwitch
+            if (switchController != null)
+            {
+                switchController.enabled = true;
+                Debug.Log("Switching enabled!");
+            }
+            // Réactiver les entrées du joueur
+            if (playerInput != null)
+            {
+                playerInput.enabled = true;  // Réactiver Player Input
+                Debug.Log("Player input re-enabled upon collision.");
+            }
 
-    void ReactivateComponents()
-    {
-        foreach (var switchScript in tileSwitches)
-        {
-            switchScript.enabled = true;  // Enables the TileSwitch script
-        }
-        foreach (var switchScript2 in tileSwitches2)
-        {
-            switchScript2.enabled = true;  // Enables the TileSwitch2 script
-
-            // Re-enable BoxCollider2D and SpriteRenderer if TileSwitch2 script is enabled
-            var boxCollider = switchScript2.GetComponent<BoxCollider2D>();
-            var spriteRenderer = switchScript2.GetComponent<SpriteRenderer>();
-            if (boxCollider) boxCollider.enabled = true;
-            if (spriteRenderer) spriteRenderer.enabled = true;
+            // Détruire l'objet après activation
+            Destroy(gameObject);
         }
     }
 }
+
+
 

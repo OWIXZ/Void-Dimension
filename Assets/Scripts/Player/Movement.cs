@@ -35,6 +35,7 @@ public class Movement : MonoBehaviour
     [SerializeField] int jumpPower;
     public bool canSwitch = false;
     [SerializeField] float SwitchingCooldown = 1;
+    public PlayerInput playerInput;
 
     bool isGrounded = false;
     public bool isMooving = true;
@@ -48,7 +49,6 @@ public class Movement : MonoBehaviour
 
     [Header("Particule")]
     [SerializeField] ParticleSystem dust;
-    [SerializeField] ParticleSystem ShockWave;
     [SerializeField] ParticleSystem DashParticle;
 
     [Header("Sound")]
@@ -150,12 +150,7 @@ public class Movement : MonoBehaviour
         {
             moveSpeed = 0;
         }
-        if (Input.GetKeyDown(KeyCode.W) && isMooving && canSwitch == true)
-        {
-            audioManager.PlaySFX(audioManager.portal);
-            ShockWave.Play();
-            StartCoroutine(Switch());
-        }
+
     }
 
     private void Flip()
@@ -204,9 +199,14 @@ public class Movement : MonoBehaviour
                 isJumping = true;
                 StartCoroutine(JumpCo());
                 StartCoroutine(JumpAnim());
+
+                // Déclencher les vibrations du gamepad
+                StartVibration(0.01f, 0.1f);  // Intensité à 0.2, durée à 0.1 secondes
             }
         }
     }
+
+
 
     public void Dash(InputAction.CallbackContext context)
     {
@@ -218,6 +218,7 @@ public class Movement : MonoBehaviour
                 audioManager.PlaySFX(audioManager.dash);
                 Player_Animator.SetBool("BoolDash", true);
                 StartCoroutine(Dash(direction));
+                StartVibration(0.03f, 0.18f);
             }
         }
     }
@@ -234,6 +235,7 @@ public class Movement : MonoBehaviour
             }
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -261,5 +263,22 @@ public class Movement : MonoBehaviour
             Player_Animator.SetBool("BoolJump", false);
             isJumping = false;
         }
+    }
+
+
+    private void StartVibration(float intensity, float duration)
+    {
+        var gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(intensity, intensity);
+            StartCoroutine(StopVibration(gamepad, duration));
+        }
+    }
+
+    private IEnumerator StopVibration(Gamepad gamepad, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        gamepad.ResetHaptics();
     }
 }

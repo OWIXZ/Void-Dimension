@@ -1,96 +1,117 @@
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class UnifiedTileSwitch : MonoBehaviour
 {
-    private SpriteRenderer rendererUni;
-    private BoxCollider2D colliderUni;
-    public bool canSwitch = true;
-    [SerializeField] float SwitchingCooldown = 1;
-    [SerializeField] float tm;
-    private IEnumerator coroutine;
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private float SwitchingCooldown = 1;
     private CinemachineImpulseSource impulseSource;
     [SerializeField] private ScreenShake profile;
-    [SerializeField] ParticleSystem ShockWave;
+    [SerializeField] private ParticleSystem ShockWave;
+    public PlayerInput playerInput;
 
     [Header("Sound")]
     public AudioManager audioManager;
 
     // Mode selection
-    public enum Mode { Mode1, Mode2 }
-    public Mode currentMode = Mode.Mode1;
+    public enum Mode { Dimension1, Dimension2 }
+    public Mode currentMode = Mode.Dimension1;
+
+    private float lastSwitchTime = 0;  // Timestamp de la dernière commutation
 
     void Start()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
-        rendererUni = GetComponent<SpriteRenderer>();
-        colliderUni = GetComponent<BoxCollider2D>();
 
-        // Initialize based on mode
-        if (currentMode == Mode.Mode2)
-        {
-            rendererUni.enabled = false;
-            colliderUni.enabled = false;
-        }
+        // Initialisation des visibilités de chaque dimension au démarrage
+        InitializeDimensions();
     }
 
-    void Update()
+    void InitializeDimensions()
     {
-        switch (currentMode)
-        {
-            case Mode.Mode1:
-                Mecha();
-                break;
-            case Mode.Mode2:
-                Mecha2();
-                break;
-        }
+        SetLayerVisibility("Dimension1", true);  // Active les objets de Dimension1
+        SetLayerVisibility("Dimension2", false); // Désactive les objets de Dimension2
     }
 
-    IEnumerator Switch()
+
+    public void Switch(InputAction.CallbackContext context)
     {
-        canSwitch = false;
-        tm = Time.time;
+        if (Time.time >= lastSwitchTime + SwitchingCooldown)
+        {
+            if (context.performed)
+            {
+                StartVibration(0.05f, 0.3f);
+                StartCoroutine(ToggleDimensions());
+            }
+        }
+        
+    }
+
+
+    IEnumerator ToggleDimensions()
+    {
+        lastSwitchTime = Time.time;  // Mettre à jour le temps de la dernière commutation
+
+        ToggleMode();
+
+        ShockWave.Play();
+        audioManager.PlaySFX(audioManager.portal);
+        CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
+
+        if (currentMode == Mode.Dimension1)
+        {
+            SetLayerVisibility("Dimension1", true);
+            SetLayerVisibility("Dimension2", false);
+        }
+        else
+        {
+            SetLayerVisibility("Dimension1", false);
+            SetLayerVisibility("Dimension2", true);
+        }
+
         yield return new WaitForSeconds(SwitchingCooldown);
-        canSwitch = true;
     }
 
-    public void Mecha()
+    void ToggleMode()
     {
-        if (Input.GetKeyDown(KeyCode.B) && canSwitch)
+        currentMode = currentMode == Mode.Dimension1 ? Mode.Dimension2 : Mode.Dimension1;
+    }
+
+    public void SetLayerVisibility(string layerName, bool isVisible)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        GameObject[] objects = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in objects)
         {
-            ShockWave.Play();
-            audioManager.PlaySFX(audioManager.portal);
-            CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
-            StartCoroutine(Switch());
-            rendererUni.enabled = !rendererUni.enabled;
-            colliderUni.enabled = !colliderUni.enabled;
+            if (obj.layer == layer)
+            {
+                SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+                BoxCollider2D collider = obj.GetComponent<BoxCollider2D>();
+                if (renderer != null) renderer.enabled = isVisible;
+                if (collider != null) collider.enabled = isVisible;
+            }
         }
     }
 
-    public void Mecha2()
+
+
+
+    private void StartVibration(float intensity, float duration)
     {
-        if (Input.GetKeyDown(KeyCode.B) && canSwitch)
+        var gamepad = Gamepad.current;
+        if (gamepad != null)
         {
-            ShockWave.Play();
-            audioManager.PlaySFX(audioManager.portal);
-            CameraShakeManager.instance.ScreenShakeFromProfile(profile, impulseSource);
-            StartCoroutine(Switch());
-            rendererUni.enabled = !rendererUni.enabled;
-            colliderUni.enabled = !colliderUni.enabled;
+            gamepad.SetMotorSpeeds(intensity, intensity);
+            StartCoroutine(StopVibration(gamepad, duration));
         }
     }
 
-    // Optionally, add a method to switch modes at runtime
-    public void ToggleMode()
+    private IEnumerator StopVibration(Gamepad gamepad, float delay)
     {
-        currentMode = currentMode == Mode.Mode1 ? Mode.Mode2 : Mode.Mode1;
-
-        // Reset component states when toggling mode
-        rendererUni.enabled = false;
-        colliderUni.enabled = false;
+        yield return new WaitForSeconds(delay);
+        gamepad.ResetHaptics();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class Option : MonoBehaviour
 {
@@ -30,15 +31,17 @@ public class Option : MonoBehaviour
             visible = !visible;
             Panel.SetActive(visible);
         }
-
-        if (Input.GetKey(KeyCode.Escape))
+    }
+    public void EscapePause(InputAction.CallbackContext context)
+    {
         {
             visible = !visible;
             Panel.SetActive(false);
         }
     }
 
-    public void SetResolution()
+
+public void SetResolution()
     {
         switch (DResolution.value)
         {
