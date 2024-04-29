@@ -88,7 +88,7 @@ public class Movement : MonoBehaviour
 
     IEnumerator Dash(Vector2 direction)
     {
-        isMooving = false;
+        //isMooving = false;
         canDash = false;
         isDashing = true;
         canJumpAfterDash = false;
@@ -109,7 +109,7 @@ public class Movement : MonoBehaviour
         rb.velocity = new Vector2(0f, 0f);
         Player_Animator.SetBool("BoolDash", false);
         isDashing = false;
-        isMooving = true;
+        //isMooving = true;
         rb.gravityScale = 1.7f;
 
         yield return new WaitForSeconds(0.1f);
