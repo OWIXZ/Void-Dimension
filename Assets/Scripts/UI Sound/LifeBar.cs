@@ -1,41 +1,54 @@
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LifeBar : MonoBehaviour
 {
+    [SerializeField] private Image healthBar;
+    [SerializeField] private SpriteRenderer characterSprite; // Référence au SpriteRenderer du personnage
+    [SerializeField] private float healthQuantity = 100f;
 
-    [SerializeField] Image healthBar;
-    [SerializeField] float healtQuantity = 100f;
+    [Header("Damage Effect")]
+    [SerializeField] private Color damageColor = Color.red; // Couleur quand le personnage prend des dégâts
+    [SerializeField] private float colorChangeDuration = 0.5f; // Durée de l'effet de couleur
+
+    private Color originalColor; // Pour stocker la couleur originale du sprite
 
     void Start()
     {
-
+        if (characterSprite != null)
+        {
+            originalColor = characterSprite.color; // Sauvegarde de la couleur originale
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (healtQuantity <= 0)
+        if (healthQuantity <= 0)
         {
             SceneManager.LoadScene("Game_Over");
         }
-        //DamageDebug();
     }
 
     public void Damage(float damage)
     {
-        healtQuantity -= damage;
-        healthBar.fillAmount = healtQuantity / 100f;
+        healthQuantity -= damage;
+        healthBar.fillAmount = healthQuantity / 100f;
+
+        if (characterSprite != null)
+        {
+            StopCoroutine("HandleDamageEffect");
+            StartCoroutine("HandleDamageEffect");
+        }
     }
 
-    /*public void DamageDebug()
+    private IEnumerator HandleDamageEffect()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Damage(10);
-        }
-    }*/
+        characterSprite.color = damageColor; // Change la couleur en rouge
+        yield return new WaitForSeconds(colorChangeDuration); // Attendez la durée définie
+        characterSprite.color = originalColor; // Revenir à la couleur originale
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

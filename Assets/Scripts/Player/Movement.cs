@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     [Header("Dashing proprieties")]
     [SerializeField] bool canJump = true;
     [SerializeField] bool canDash = true;
+    private bool canTurn = true;
     [SerializeField] bool isDashing;
     [SerializeField] private bool canJumpAfterDash = true;
     public bool isJumping = false;
@@ -88,8 +89,8 @@ public class Movement : MonoBehaviour
 
     IEnumerator Dash(Vector2 direction)
     {
-        //isMooving = false;
         canDash = false;
+        canTurn = false;
         isDashing = true;
         canJumpAfterDash = false;
         Player_Animator.SetBool("BoolDash", true);
@@ -109,12 +110,12 @@ public class Movement : MonoBehaviour
         rb.velocity = new Vector2(0f, 0f);
         Player_Animator.SetBool("BoolDash", false);
         isDashing = false;
-        //isMooving = true;
+    
         rb.gravityScale = 1.7f;
-
+       
         yield return new WaitForSeconds(0.1f);
         canJumpAfterDash = true;
-
+        canTurn = true;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
@@ -151,14 +152,18 @@ public class Movement : MonoBehaviour
             moveSpeed = 0;
         }
 
+
     }
 
     private void Flip()
     {
-        isFacingRight = !isFacingRight;
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1f;
-        transform.localScale = localScale;
+        if (canTurn) // Ne permet le retournement que si canTurn est vrai
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
     }
 
     private void Fall()
