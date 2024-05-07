@@ -15,6 +15,14 @@ public class LifeBar : MonoBehaviour
 
     private Color originalColor; // Pour stocker la couleur originale du sprite
 
+    [Header("Sound")]
+    public AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     void Start()
     {
         if (characterSprite != null)
@@ -54,6 +62,7 @@ public class LifeBar : MonoBehaviour
     {
         if (collision.tag == "FallDetector")
         {
+            audioManager.PlaySFX(audioManager.Domage);
             Damage(5);
         }
     }

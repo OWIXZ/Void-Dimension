@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2085735655697145111}
   - component: {fileID: 6946581940061402379}
-  - component: {fileID: 4670829992206187337}
+  - component: {fileID: 718613464351527061}
   m_Layer: 0
   m_Name: Square
   m_TagString: Ground
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4670829992206187337
-BoxCollider2D:
+--- !u!60 &718613464351527061
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -127,6 +127,10 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5, y: 0.5}
+      - {x: -0.5, y: -0.5}
+      - {x: 0.5, y: -0.5}
+      - {x: 0.5, y: 0.5}
+  m_UseDelaunayMesh: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8936678752162286238}
   - component: {fileID: -2846916123553153962}
   m_Layer: 0
-  m_Name: Calque 6
+  m_Name: CheckPoint
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4713431585e97bc46a05c38c1d0bb234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 0}
-  CheckPointON: 1
+  checkpointSound: {fileID: 8300000, guid: 612183c2165ae184d859e1b9dc778b98, type: 3}
+  checkpointAnimator: {fileID: 0}
+  animationTriggerName: Activate
 --- !u!61 &-2846916123553153962
 BoxCollider2D:
   m_ObjectHideFlags: 0

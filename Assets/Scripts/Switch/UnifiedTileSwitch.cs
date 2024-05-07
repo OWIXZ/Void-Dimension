@@ -35,7 +35,6 @@ public class UnifiedTileSwitch : MonoBehaviour
         SetLayerVisibility("Dimension2", false); // Désactive les objets de Dimension2
     }
 
-
     public void Switch(InputAction.CallbackContext context)
     {
         if (Time.time >= lastSwitchTime + SwitchingCooldown)
@@ -46,9 +45,7 @@ public class UnifiedTileSwitch : MonoBehaviour
                 StartCoroutine(ToggleDimensions());
             }
         }
-        
     }
-
 
     IEnumerator ToggleDimensions()
     {
@@ -89,9 +86,14 @@ public class UnifiedTileSwitch : MonoBehaviour
             if (obj.layer == layer)
             {
                 SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-                BoxCollider2D collider = obj.GetComponent<BoxCollider2D>();
                 if (renderer != null) renderer.enabled = isVisible;
-                if (collider != null) collider.enabled = isVisible;
+
+                // Désactiver ou activer tous les colliders sur l'objet
+                Collider2D[] colliders = obj.GetComponents<Collider2D>();
+                foreach (Collider2D collider in colliders)
+                {
+                    collider.enabled = isVisible;
+                }
             }
         }
     }
@@ -99,7 +101,7 @@ public class UnifiedTileSwitch : MonoBehaviour
 
 
 
-    private void StartVibration(float intensity, float duration)
+private void StartVibration(float intensity, float duration)
     {
         var gamepad = Gamepad.current;
         if (gamepad != null)

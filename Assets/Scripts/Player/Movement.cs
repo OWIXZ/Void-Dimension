@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour
     [Header("Respawn")]
     public Vector2 respawnPoint;
     public GameObject FallDetector;
-    public CheckPoint checkpoint;
+    public Checkpoint checkpoint;
 
     [Header("Movement")]
 
@@ -37,6 +37,8 @@ public class Movement : MonoBehaviour
     public bool canSwitch = false;
     [SerializeField] float SwitchingCooldown = 1;
     public PlayerInput playerInput;
+    private bool wasInAir = false;
+
 
     bool isGrounded = false;
     public bool isMooving = true;
@@ -79,6 +81,7 @@ public class Movement : MonoBehaviour
             Flip();
         }
         Fall();
+        Up();
     }
 
     void FixedUpdate()
@@ -138,7 +141,7 @@ public class Movement : MonoBehaviour
     IEnumerator JumpAnim()
     {
         yield return new WaitForSeconds(0.5f);
-        Player_Animator.SetBool("BoolJump", false);
+       Player_Animator.SetBool("BoolJump", false);
     }
 
     void PlayerOneController()
@@ -178,6 +181,17 @@ public class Movement : MonoBehaviour
         }
     }
 
+    private void Up()
+    {
+        if (rb.velocity.y > 0f && isJumping == false)
+        {
+            Player_Animator.SetBool("BoolJump2", true);
+        }
+        else
+        {
+            Player_Animator.SetBool("BoolJump2", false);
+        }
+    }
     public void Move(InputAction.CallbackContext context)
     {
         if (isMooving)
@@ -230,6 +244,7 @@ public class Movement : MonoBehaviour
 
     private void Ground_Detection()
     {
+        bool previouslyGrounded = isGrounded;
         Collider2D[] Wall_Detection = Physics2D.OverlapBoxAll(groundPosition.position, groundSize, 0, groundLayer);
         isGrounded = false;
         foreach (var Object in Wall_Detection)
@@ -237,7 +252,21 @@ public class Movement : MonoBehaviour
             if (Object.tag == "Ground")
             {
                 isGrounded = true;
+                break;
             }
+        }
+
+        // Joue la particule si le joueur retouche le sol après avoir été en l'air
+        if (!previouslyGrounded && isGrounded && wasInAir)
+        {
+            dust.Play();
+            wasInAir = false; // Réinitialiser l'état
+        }
+
+        // Mettre à jour l'état de wasInAir
+        if (!isGrounded)
+        {
+            wasInAir = true;
         }
     }
 
@@ -246,29 +275,37 @@ public class Movement : MonoBehaviour
     {
         if (collision.tag == "FallDetector")
         {
-            audioManager.PlaySFX(audioManager.death);
             transform.position = respawnPoint;
+            rb.velocity = Vector2.zero;
+            ResetAllPlatforms();
         }
-        else if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == true)
-        {
-            checkpoint.checkPointPass();
-            respawnPoint = transform.position;
-        }
-        else if (collision.tag == "Checkpoint" && checkpoint.CheckPointON == false)
+        else if (collision.tag == "Checkpoint")
         {
             respawnPoint = transform.position;
         }
     }
 
+    // Fonction pour réinitialiser toutes les plateformes
+    void ResetAllPlatforms()
+    {
+        PlatformFall[] platforms = FindObjectsOfType<PlatformFall>();
+        foreach (PlatformFall platform in platforms)
+        {
+            platform.ResetPosition();
+        }
+    }
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision detected with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Ground") && isJumping)
         {
             Player_Animator.SetBool("BoolJump", false);
             isJumping = false;
         }
     }
+
+
 
 
     private void StartVibration(float intensity, float duration)
