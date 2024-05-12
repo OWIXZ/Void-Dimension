@@ -28,22 +28,25 @@ public class PauseMenu : MonoBehaviour
     void Paused()
     {
         Moving.isMooving = false;
-        tileSwitch.enabled = false; // Désactive le script UnifiedTileSwitch
-        playerInput.enabled = false; // Désactive l'input du joueur
+        tileSwitch.enabled = false;
+        playerInput.enabled = false;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;
+        AudioManager.Instance.PauseAudio();
     }
 
     public void Resume()
     {
         Moving.isMooving = true;
-        tileSwitch.enabled = true; // Réactive le script UnifiedTileSwitch
-        playerInput.enabled = true; // Réactive l'input du joueur
+        tileSwitch.enabled = true;
+        playerInput.enabled = true;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+        AudioManager.Instance.ResumeAudio();
     }
+
 
     public void LoadMainMenu()
     {

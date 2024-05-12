@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    // Instance statique accessible globalement
     public static AudioManager Instance { get; private set; }
 
     [Header("------- Audio Source -------")]
@@ -24,11 +23,11 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);  // Assurez-vous que l'AudioManager persiste entre les changements de scène
+            DontDestroyOnLoad(gameObject);
         }
         else if (Instance != this)
         {
-            Destroy(gameObject);  // Évite les doublons d'instance
+            Destroy(gameObject);
         }
         musicSource.clip = background;
         musicSource.Play();
@@ -40,5 +39,15 @@ public class AudioManager : MonoBehaviour
         {
             SFXSource.PlayOneShot(clip);
         }
+    }
+
+    public void PauseAudio()
+    {
+        SFXSource.Pause();
+    }
+
+    public void ResumeAudio()
+    {
+        SFXSource.UnPause();
     }
 }

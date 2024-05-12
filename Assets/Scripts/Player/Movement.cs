@@ -220,7 +220,7 @@ public class Movement : MonoBehaviour
                 StartCoroutine(JumpAnim());
 
                 // Déclencher les vibrations du gamepad
-                StartVibration(0.01f, 0.1f);  // Intensité à 0.2, durée à 0.1 secondes
+                StartVibration(0.01f, 0.1f);  // Intensité à 0.01, durée à 0.01 secondes
             }
         }
     }
@@ -273,27 +273,28 @@ public class Movement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "FallDetector")
+        if (collision.CompareTag("FallDetector"))
         {
             transform.position = respawnPoint;
             rb.velocity = Vector2.zero;
-            ResetAllPlatforms();
+            ResetAllPlatforms(); // Réinitialise toutes les plateformes, actives ou non
         }
-        else if (collision.tag == "Checkpoint")
+        else if (collision.CompareTag("Checkpoint"))
         {
             respawnPoint = transform.position;
         }
     }
 
-    // Fonction pour réinitialiser toutes les plateformes
     void ResetAllPlatforms()
     {
         PlatformFall[] platforms = FindObjectsOfType<PlatformFall>();
         foreach (PlatformFall platform in platforms)
         {
-            platform.ResetPosition();
+            platform.ResetPosition(); // Force la réinitialisation même si désactivée
         }
     }
+
+
 
 
     private void OnCollisionEnter2D(Collision2D collision)
