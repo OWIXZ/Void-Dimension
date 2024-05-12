@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4156030035791815107
+--- !u!1 &238539075307123894
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5296231560041881066}
-  - component: {fileID: 4649342063835894163}
-  - component: {fileID: 8936678752162286238}
-  - component: {fileID: -2846916123553153962}
+  - component: {fileID: 6786722120960617573}
+  - component: {fileID: 4693597443870461975}
+  - component: {fileID: 5521874892145457536}
+  - component: {fileID: 303934486100448689}
+  - component: {fileID: 1823635356758744427}
   m_Layer: 0
-  m_Name: CheckPoint
+  m_Name: CheckPoint (1)
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5296231560041881066
+--- !u!4 &6786722120960617573
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4156030035791815107}
+  m_GameObject: {fileID: 238539075307123894}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -81, y: 72.62872, z: 3.913302}
+  m_LocalScale: {x: 0.76733255, y: 0.76733255, z: 0.76733255}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4649342063835894163
+--- !u!212 &4693597443870461975
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4156030035791815107}
+  m_GameObject: {fileID: 238539075307123894}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -86,29 +87,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8936678752162286238
+--- !u!114 &5521874892145457536
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4156030035791815107}
+  m_GameObject: {fileID: 238539075307123894}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4713431585e97bc46a05c38c1d0bb234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   checkpointSound: {fileID: 8300000, guid: 612183c2165ae184d859e1b9dc778b98, type: 3}
-  checkpointAnimator: {fileID: 0}
+  checkpointAnimator: {fileID: 303934486100448689}
   animationTriggerName: Activate
   hasBeenActivated: 0
---- !u!61 &-2846916123553153962
-BoxCollider2D:
+--- !u!95 &303934486100448689
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4156030035791815107}
+  m_GameObject: {fileID: 238539075307123894}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fb362263a40cef949bd7c92b7c7b80ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!60 &1823635356758744427
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238539075307123894}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -144,6 +166,61 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.859375, y: 8.46875}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.42, y: -2.35}
+      - {x: 1.4, y: -2.33}
+      - {x: 1.2099999, y: -2.1599998}
+      - {x: 1.12, y: -2.11}
+      - {x: 0.82, y: -2.01}
+      - {x: 0.64, y: -1.9399999}
+      - {x: 0.61, y: -1.55}
+      - {x: 0.79999995, y: -1.27}
+      - {x: 1.04, y: -1.02}
+      - {x: 1.09, y: -0.94}
+      - {x: 1.0699999, y: -0.58}
+      - {x: 1.09, y: -0.58}
+      - {x: 1.0799999, y: -0.35}
+      - {x: 1.05, y: 0.04}
+      - {x: 0.96999997, y: 0.96}
+      - {x: 0.97999996, y: 1.11}
+      - {x: 1.01, y: 1.3199999}
+      - {x: 0.94, y: 1.52}
+      - {x: 0.78999996, y: 1.78}
+      - {x: 0.53, y: 2.23}
+      - {x: 0.41, y: 2.45}
+      - {x: 0.29, y: 2.6599998}
+      - {x: 0.19, y: 2.73}
+      - {x: -0.04, y: 2.73}
+      - {x: -0.22, y: 2.74}
+      - {x: -0.57, y: 2.74}
+      - {x: -0.7, y: 2.6799998}
+      - {x: -1.24, y: 2.4099998}
+      - {x: -1.36, y: 2.33}
+      - {x: -1.35, y: 2.2}
+      - {x: -1.3, y: 2}
+      - {x: -1.41, y: 1.9599999}
+      - {x: -1.48, y: 1.88}
+      - {x: -1.49, y: 1.8499999}
+      - {x: -1.49, y: 1.26}
+      - {x: -1.51, y: 0.96999997}
+      - {x: -1.51, y: -0.91999996}
+      - {x: -1.5, y: -0.96}
+      - {x: -1.42, y: -1.22}
+      - {x: -1.35, y: -1.31}
+      - {x: -0.96, y: -1.74}
+      - {x: -0.93, y: -1.8499999}
+      - {x: -1.0699999, y: -1.89}
+      - {x: -1.2099999, y: -1.9399999}
+      - {x: -1.35, y: -2}
+      - {x: -1.5699999, y: -2.1299999}
+      - {x: -1.65, y: -2.21}
+      - {x: -2.12, y: -2.4199998}
+      - {x: -2.3, y: -2.61}
+      - {x: -2.3, y: -2.6299999}
+      - {x: -2.27, y: -2.6599998}
+      - {x: 1.86, y: -2.6599998}
+      - {x: 1.88, y: -2.6399999}
+      - {x: 1.87, y: -2.6}
+      - {x: 1.8399999, y: -2.56}
+  m_UseDelaunayMesh: 0
