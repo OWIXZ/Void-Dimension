@@ -1,21 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI; // Pour le Button
-using UnityEngine.EventSystems; // Pour EventSystem
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UnlockAbilitiesPanel : MonoBehaviour
+public class UnlockSwitchPanel : MonoBehaviour
 {
     public static bool gameIsPaused = false;
+
     [SerializeField] private Movement Moving;
     [SerializeField] private UnifiedTileSwitch tileSwitch;
     [SerializeField] private PlayerInput playerInput;
-    public GameObject UnlockDashUI;
-    public static bool UnlockAbilitiesIsOpen = false;
+    public GameObject UnlockSwitchUI;
 
-
-    [SerializeField] private Button defaultSelectedButton; // Référence au bouton Resume
-
+    [SerializeField] private Button defaultSelectedButton; // Référence au bouton par défaut
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,17 +29,15 @@ public class UnlockAbilitiesPanel : MonoBehaviour
         }
     }
 
-
-
     public void Paused()
     {
         Moving.isMooving = false;
         tileSwitch.enabled = false;
         playerInput.enabled = false;
-        UnlockDashUI.SetActive(true);
+        UnlockSwitchUI.SetActive(true);
+        UnlockAbilitiesPanel.UnlockAbilitiesIsOpen = true;
         Time.timeScale = 0;
         gameIsPaused = true;
-        UnlockAbilitiesIsOpen = true;
         AudioManager.Instance.PauseAudio();
 
         // Définir le bouton par défaut
@@ -58,30 +53,10 @@ public class UnlockAbilitiesPanel : MonoBehaviour
         Moving.isMooving = true;
         tileSwitch.enabled = true;
         playerInput.enabled = true;
-        UnlockDashUI.SetActive(false);
+        UnlockSwitchUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-        UnlockAbilitiesIsOpen = false;
         AudioManager.Instance.ResumeAudio();
+        UnlockAbilitiesPanel.UnlockAbilitiesIsOpen = false;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

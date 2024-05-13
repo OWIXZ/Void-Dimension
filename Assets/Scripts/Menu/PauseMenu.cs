@@ -14,13 +14,17 @@ public class PauseMenu : MonoBehaviour
     {
         if (context.performed)
         {
-            if (gameIsPaused)
+            // Vérifiez que ni le panneau des capacités ni celui du switch ne sont ouverts
+            if (!UnlockAbilitiesPanel.UnlockAbilitiesIsOpen)
             {
-                Resume();
-            }
-            else
-            {
-                Paused();
+                if (gameIsPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Paused();
+                }
             }
         }
     }
@@ -59,4 +63,3 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("Main_Menu");
     }
 }
-
