@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
-    [SerializeField] private Movement Moving; // Script de mouvement
-    [SerializeField] private UnifiedTileSwitch tileSwitch; // Script de changement de tuile
-    [SerializeField] private PlayerInput playerInput; // Composant d'input du joueur
+    [SerializeField] private Movement Moving;
+    [SerializeField] private UnifiedTileSwitch tileSwitch;
+    [SerializeField] private PlayerInput playerInput;
     public GameObject pauseMenuUI;
 
     public void Pause(InputAction.CallbackContext context)
@@ -25,7 +25,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void Paused()
+    public void Paused()
     {
         Moving.isMooving = false;
         tileSwitch.enabled = false;
@@ -38,6 +38,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        Moving.ResetMovement(); // Réinitialise le mouvement du joueur
         Moving.isMooving = true;
         tileSwitch.enabled = true;
         playerInput.enabled = true;
@@ -47,12 +48,11 @@ public class PauseMenu : MonoBehaviour
         AudioManager.Instance.ResumeAudio();
     }
 
-
     public void LoadMainMenu()
     {
         Moving.isMooving = true;
-        tileSwitch.enabled = true; // Assurez-vous de réactiver le script lors du chargement du menu
-        playerInput.enabled = true; // Réactive l'input du joueur
+        tileSwitch.enabled = true;
+        playerInput.enabled = true;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1;
         gameIsPaused = false;

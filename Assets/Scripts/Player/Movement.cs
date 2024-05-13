@@ -17,10 +17,11 @@ public class Movement : MonoBehaviour
     public bool isJumping = false;
     public bool AbilitiesDash = false;
     private float dashingCooldown = 0.5f;
-    private float JumpingCooldown = 0.5f;
+    private float JumpingCooldown = 0.1f;
     private float startDashTime = 1f;
     private float tm;
     private IEnumerator coroutine;
+
 
     private float horizontal;
     private bool isFacingRight = true;
@@ -34,8 +35,6 @@ public class Movement : MonoBehaviour
 
     private float moveSpeed = 10f;
     [SerializeField] int jumpPower;
-    public bool canSwitch = false;
-    [SerializeField] float SwitchingCooldown = 1;
     public PlayerInput playerInput;
     private bool wasInAir = false;
 
@@ -123,13 +122,7 @@ public class Movement : MonoBehaviour
         canDash = true;
     }
 
-    IEnumerator Switch()
-    {
-        canSwitch = false;
-        tm = Time.time;
-        yield return new WaitForSeconds(SwitchingCooldown);
-        canSwitch = true;
-    }
+
 
     IEnumerator JumpCo()
     {
@@ -194,16 +187,27 @@ public class Movement : MonoBehaviour
     }
     public void Move(InputAction.CallbackContext context)
     {
-        if (isMooving)
+        if (!PauseMenu.gameIsPaused)
         {
-            horizontal = context.ReadValue<Vector2>().x;
-            Player_Animator.SetBool("BoolRun", true);
-        }
-        if (context.canceled)
-        {
-            Player_Animator.SetBool("BoolRun", false);
+            if (isMooving)
+            {
+                horizontal = context.ReadValue<Vector2>().x;
+                Player_Animator.SetBool("BoolRun", horizontal != 0);
+            }
+            if (context.canceled)
+            {
+                horizontal = 0;  // Reset horizontal movement
+                Player_Animator.SetBool("BoolRun", false);
+            }
         }
     }
+
+    public void ResetMovement()
+    {
+        horizontal = 0;
+        Player_Animator.SetBool("BoolRun", false);
+    }
+
 
     public void Jump(InputAction.CallbackContext context)
     {

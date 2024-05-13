@@ -1,18 +1,21 @@
-
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // Pour le Button
+using UnityEngine.EventSystems; // Pour EventSystem
 
 public class UnlockAbilitiesPanel : MonoBehaviour
 {
     public static bool gameIsPaused = false;
-    [SerializeField] private Movement Moving; // Script de mouvement
-    [SerializeField] private UnifiedTileSwitch tileSwitch; // Script de changement de tuile
-    [SerializeField] private PlayerInput playerInput; // Composant d'input du joueur
-    public GameObject pauseMenuUI;
+    [SerializeField] private Movement Moving;
+    [SerializeField] private UnifiedTileSwitch tileSwitch;
+    [SerializeField] private PlayerInput playerInput;
+    public GameObject UnlockDashUI;
 
-    private void OnTriggerEnter(Collider collision)
+    [SerializeField] private Button defaultSelectedButton; // Référence au bouton Resume
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
@@ -27,35 +30,54 @@ public class UnlockAbilitiesPanel : MonoBehaviour
         }
     }
 
-    void Paused()
+
+
+    public void Paused()
     {
         Moving.isMooving = false;
-        tileSwitch.enabled = false; // Désactive le script UnifiedTileSwitch
-        playerInput.enabled = false; // Désactive l'input du joueur
-        pauseMenuUI.SetActive(true);
+        tileSwitch.enabled = false;
+        playerInput.enabled = false;
+        UnlockDashUI.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;
+        AudioManager.Instance.PauseAudio();
+
+        // Définir le bouton par défaut
+        if (defaultSelectedButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null); // Désélectionne tout autre élément actuellement sélectionné
+            EventSystem.current.SetSelectedGameObject(defaultSelectedButton.gameObject);
+        }
     }
 
     public void Resume()
     {
         Moving.isMooving = true;
-        tileSwitch.enabled = true; // Réactive le script UnifiedTileSwitch
-        playerInput.enabled = true; // Réactive l'input du joueur
-        pauseMenuUI.SetActive(false);
+        tileSwitch.enabled = true;
+        playerInput.enabled = true;
+        UnlockDashUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-    }
-
-    public void LoadMainMenu()
-    {
-        Moving.isMooving = true;
-        tileSwitch.enabled = true; // Assurez-vous de réactiver le script lors du chargement du menu
-        playerInput.enabled = true; // Réactive l'input du joueur
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1;
-        gameIsPaused = false;
-        SceneManager.LoadScene("Main_Menu");
+        AudioManager.Instance.ResumeAudio();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
