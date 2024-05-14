@@ -243,6 +243,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Dimension3",
+            "id": "943261f4-b55b-4a07-9ade-5bb8f526eca6",
+            "actions": [
+                {
+                    "name": "Instinct",
+                    "type": "Button",
+                    "id": "9c0a2898-9d6e-4486-8c59-16c213f42a71",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5e0d3ad1-738a-4e3c-8e18-a8834a99a7fe",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Instinct",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b22016c-30de-40df-a72f-f48b4fe53a61",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Instinct",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
