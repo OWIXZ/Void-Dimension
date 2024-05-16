@@ -11,7 +11,7 @@ public class UnlockAbility : MonoBehaviour
         if (collision.tag == "Player")
         {
             Dash.AbilitiesDash = true;
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

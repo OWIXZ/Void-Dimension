@@ -19,7 +19,7 @@ public class DamageZone : MonoBehaviour
             LifeBar lifeBar = collision.GetComponent<LifeBar>();
             if (lifeBar != null)
             {
-                damageCoroutine = StartCoroutine(ApplyDamage(lifeBar, 1)); // Commence à appliquer des dommages
+                damageCoroutine = StartCoroutine(ApplyDamage(lifeBar, 0.5f)); // Commence à appliquer des dommages
             }
         }
     }

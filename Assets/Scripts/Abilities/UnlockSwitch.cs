@@ -40,7 +40,7 @@ public class UnlockSwitchTrigger : MonoBehaviour
             }
 
             // Détruire l'objet après activation
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

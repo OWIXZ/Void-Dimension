@@ -1,34 +1,82 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class SpriteManager : MonoBehaviour
 {
-    // Nom du Layer à contrôler
     private string layerName = "Dimension3";
     public PlayerInput playerInput;
+    [SerializeField] ParticleSystem Instinct;
+    [SerializeField] private CinemachineVirtualCamera cinemachineCamera; // Référence à la caméra virtuelle Cinemachine
+
+    private float normalSize = 15f; // Taille orthographique normale
+    private float zoomedSize = 13f; // Taille orthographique pour le zoom
+    [SerializeField] private float transitionDuration = 0.5f; // Durée de la transition en secondes
+
+    private bool isZooming = false; // Contrôle de l'état de zoom
+    private float targetSize; // Taille cible pour l'interpolation
+    private float timeSinceZoomStart; // Suivi du temps depuis le début du zoom
 
     void Start()
     {
-        // Désactive tous les SpriteRenderer des GameObjects sur le layer "Dimension3" au début du jeu.
         ToggleSpriteRenderers(false);
+        if (cinemachineCamera == null)
+        {
+            Debug.LogError("Cinemachine camera not assigned!");
+        }
+        else
+        {
+            cinemachineCamera.m_Lens.OrthographicSize = normalSize; // Définissez la taille orthographique initiale
+        }
     }
 
+    void Update()
+    {
+        if (isZooming)
+        {
+            if (cinemachineCamera != null)
+            {
+                // Calcule le temps écoulé divisé par la durée totale pour obtenir un ratio
+                float ratio = timeSinceZoomStart / transitionDuration;
+                // Interpole entre la taille actuelle et la taille cible
+                cinemachineCamera.m_Lens.OrthographicSize = Mathf.Lerp(cinemachineCamera.m_Lens.OrthographicSize, targetSize, ratio);
+                timeSinceZoomStart += Time.deltaTime;
 
+                // Arrête le zooming lorsque le temps nécessaire est atteint
+                if (ratio >= 1.0f)
+                {
+                    isZooming = false;
+                }
+            }
+        }
+    }
 
-    // Méthode pour réagir aux changements d'état de l'action de Input System
     public void Dimension3(InputAction.CallbackContext context)
     {
-        if (context.performed) // L'action est déclenchée, correspondant à un appui sur la touche
+        if (context.performed)
         {
-            ToggleSpriteRenderers(true); // Active les SpriteRenderer
+            ToggleSpriteRenderers(true);
+            Instinct.Play();
+            if (cinemachineCamera != null)
+            {
+                targetSize = zoomedSize;
+                isZooming = true;
+                timeSinceZoomStart = 0;
+            }
         }
-        else if (context.canceled) // L'action est terminée, correspondant au relâchement de la touche
+        else if (context.canceled)
         {
-            ToggleSpriteRenderers(false); // Désactive les SpriteRenderer
+            ToggleSpriteRenderers(false);
+            Instinct.Stop();
+            if (cinemachineCamera != null)
+            {
+                targetSize = normalSize;
+                isZooming = true;
+                timeSinceZoomStart = 0;
+            }
         }
     }
 
-    // Méthode pour activer ou désactiver les SpriteRenderer
     public void ToggleSpriteRenderers(bool enable)
     {
         int layer = LayerMask.NameToLayer(layerName);
@@ -43,3 +91,4 @@ public class SpriteManager : MonoBehaviour
         }
     }
 }
+
