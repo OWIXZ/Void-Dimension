@@ -234,6 +234,17 @@
                 {
                     "name": "",
                     "id": "b3e0019e-244f-4b03-8102-0a7fd7f86f0f",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2822f60-4b21-4179-9e11-842015a7ba1b",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
@@ -262,7 +273,7 @@
                 {
                     "name": "",
                     "id": "5e0d3ad1-738a-4e3c-8e18-a8834a99a7fe",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -274,6 +285,17 @@
                     "name": "",
                     "id": "9b22016c-30de-40df-a72f-f48b4fe53a61",
                     "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Instinct",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4d58f7e-ef8a-45ef-b6bc-2df8efe9679e",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
