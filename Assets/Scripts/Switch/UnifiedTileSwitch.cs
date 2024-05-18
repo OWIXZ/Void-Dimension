@@ -10,15 +10,17 @@ public class UnifiedTileSwitch : MonoBehaviour
     [SerializeField] private ScreenShake profile;
     [SerializeField] private ParticleSystem ShockWave;
     public PlayerInput playerInput;
+    public bool SwitchON = false;
 
-    [Header("Sound")]
+    [Header("Son")]
     public AudioManager audioManager;
 
-    // Mode selection
+    // Sélection de mode
     public enum Mode { Dimension1, Dimension2 }
     public Mode currentMode = Mode.Dimension1;
 
     private float lastSwitchTime = 0;  // Timestamp de la dernière commutation
+
 
     void Start()
     {
@@ -37,7 +39,7 @@ public class UnifiedTileSwitch : MonoBehaviour
 
     public void Switch(InputAction.CallbackContext context)
     {
-        if (Time.time >= lastSwitchTime + SwitchingCooldown)
+        if (SwitchON && Time.time >= lastSwitchTime + SwitchingCooldown)
         {
             if (context.performed)
             {
@@ -98,10 +100,7 @@ public class UnifiedTileSwitch : MonoBehaviour
         }
     }
 
-
-
-
-private void StartVibration(float intensity, float duration)
+    private void StartVibration(float intensity, float duration)
     {
         var gamepad = Gamepad.current;
         if (gamepad != null)

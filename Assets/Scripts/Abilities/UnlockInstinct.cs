@@ -1,15 +1,15 @@
 
 using UnityEngine;
 
-public class UnlockSwitch : MonoBehaviour
+public class UnlockInstinct : MonoBehaviour
 {
-    public UnifiedTileSwitch SwitchON;
+    public SpriteManager Instinct;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            SwitchON.SwitchON = true;
+            Instinct.CanInstinct = true;
             //Destroy(gameObject);
         }
     }

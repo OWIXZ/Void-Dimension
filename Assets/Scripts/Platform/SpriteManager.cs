@@ -16,6 +16,7 @@ public class SpriteManager : MonoBehaviour
     private bool isZooming = false; // Contrôle de l'état de zoom
     private float targetSize; // Taille cible pour l'interpolation
     private float timeSinceZoomStart; // Suivi du temps depuis le début du zoom
+    public bool CanInstinct = false;
 
     void Start()
     {
@@ -53,26 +54,31 @@ public class SpriteManager : MonoBehaviour
 
     public void Dimension3(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (CanInstinct == true)
         {
-            ToggleSpriteRenderers(true);
-            Instinct.Play();
-            if (cinemachineCamera != null)
+            if (context.performed)
             {
-                targetSize = zoomedSize;
-                isZooming = true;
-                timeSinceZoomStart = 0;
+                ToggleSpriteRenderers(true);
+                Instinct.Play();
+                if (cinemachineCamera != null)
+                {
+                    targetSize = zoomedSize;
+                    isZooming = true;
+                    timeSinceZoomStart = 0;
+                }
+                Time.timeScale = 0.5f; // Réduire le timescale quand l'instinct est activé
             }
-        }
-        else if (context.canceled)
-        {
-            ToggleSpriteRenderers(false);
-            Instinct.Stop();
-            if (cinemachineCamera != null)
+            else if (context.canceled)
             {
-                targetSize = normalSize;
-                isZooming = true;
-                timeSinceZoomStart = 0;
+                ToggleSpriteRenderers(false);
+                Instinct.Stop();
+                if (cinemachineCamera != null)
+                {
+                    targetSize = normalSize;
+                    isZooming = true;
+                    timeSinceZoomStart = 0;
+                }
+                Time.timeScale = 1f; // Revenir au timescale normal quand l'instinct est désactivé
             }
         }
     }
@@ -91,4 +97,3 @@ public class SpriteManager : MonoBehaviour
         }
     }
 }
-

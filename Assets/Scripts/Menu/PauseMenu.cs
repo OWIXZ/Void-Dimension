@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private UnifiedTileSwitch tileSwitch;
     [SerializeField] private PlayerInput playerInput;
     public GameObject pauseMenuUI;
+    public GameObject objectToToggle; // Référence au GameObject à activer/désactiver
 
     public void Pause(InputAction.CallbackContext context)
     {
@@ -38,6 +39,11 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0;
         gameIsPaused = true;
         AudioManager.Instance.PauseAudio();
+
+        if (objectToToggle != null)
+        {
+            objectToToggle.SetActive(false); // Désactiver le GameObject
+        }
     }
 
     public void Resume()
@@ -50,6 +56,11 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         gameIsPaused = false;
         AudioManager.Instance.ResumeAudio();
+
+        if (objectToToggle != null)
+        {
+            objectToToggle.SetActive(true); // Réactiver le GameObject
+        }
     }
 
     public void LoadMainMenu()
