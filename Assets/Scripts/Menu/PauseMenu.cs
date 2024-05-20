@@ -1,6 +1,6 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private UnifiedTileSwitch tileSwitch;
     [SerializeField] private PlayerInput playerInput;
     public GameObject pauseMenuUI;
-    public GameObject objectToToggle; // Référence au GameObject à activer/désactiver
+    [SerializeField] private SpriteManager spriteManager; // Ajoutez cette référence
 
     public void Pause(InputAction.CallbackContext context)
     {
@@ -33,34 +33,26 @@ public class PauseMenu : MonoBehaviour
     public void Paused()
     {
         Moving.isMooving = false;
+        spriteManager.SetActive(false); // Désactiver le SpriteManager
         tileSwitch.enabled = false;
         playerInput.enabled = false;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;
         AudioManager.Instance.PauseAudio();
-
-        if (objectToToggle != null)
-        {
-            objectToToggle.SetActive(false); // Désactiver le GameObject
-        }
     }
 
     public void Resume()
     {
         Moving.ResetMovement(); // Réinitialise le mouvement du joueur
         Moving.isMooving = true;
+        spriteManager.SetActive(true); // Réactiver le SpriteManager
         tileSwitch.enabled = true;
         playerInput.enabled = true;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
         AudioManager.Instance.ResumeAudio();
-
-        if (objectToToggle != null)
-        {
-            objectToToggle.SetActive(true); // Réactiver le GameObject
-        }
     }
 
     public void LoadMainMenu()

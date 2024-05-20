@@ -9,14 +9,15 @@ public class SpriteManager : MonoBehaviour
     [SerializeField] ParticleSystem Instinct;
     [SerializeField] private CinemachineVirtualCamera cinemachineCamera; // Référence à la caméra virtuelle Cinemachine
 
-    private float normalSize = 15f; // Taille orthographique normale
-    private float zoomedSize = 13f; // Taille orthographique pour le zoom
+    private float normalSize = 13f; // Taille orthographique normale
+    private float zoomedSize = 11f; // Taille orthographique pour le zoom
     [SerializeField] private float transitionDuration = 0.5f; // Durée de la transition en secondes
 
     private bool isZooming = false; // Contrôle de l'état de zoom
     private float targetSize; // Taille cible pour l'interpolation
     private float timeSinceZoomStart; // Suivi du temps depuis le début du zoom
     public bool CanInstinct = false;
+    public bool IsActive { get; private set; } = true;
 
     void Start()
     {
@@ -54,7 +55,7 @@ public class SpriteManager : MonoBehaviour
 
     public void Dimension3(InputAction.CallbackContext context)
     {
-        if (CanInstinct == true)
+        if (CanInstinct == true && IsActive)
         {
             if (context.performed)
             {
@@ -94,6 +95,23 @@ public class SpriteManager : MonoBehaviour
             {
                 renderer.enabled = enable;
             }
+        }
+    }
+
+    public void SetActive(bool isActive)
+    {
+        IsActive = isActive;
+        if (!isActive)
+        {
+            ToggleSpriteRenderers(false);
+            Instinct.Stop();
+            if (cinemachineCamera != null)
+            {
+                targetSize = normalSize;
+                isZooming = true;
+                timeSinceZoomStart = 0;
+            }
+            Time.timeScale = 1f;
         }
     }
 }
