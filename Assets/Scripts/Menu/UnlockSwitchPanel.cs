@@ -13,6 +13,7 @@ public class UnlockSwitchPanel : MonoBehaviour
     public GameObject SecondObjectToToggle; // Deuxième GameObject à activer/désactiver
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private SpriteManager spriteManager; // Ajoutez cette référence
+    [SerializeField] private UnifiedTileSwitch SwitchManager; // Ajoutez cette référence
 
     [SerializeField] private Button defaultSelectedButton; // Référence au bouton par défaut
 
@@ -36,6 +37,7 @@ public class UnlockSwitchPanel : MonoBehaviour
         Moving.isMooving = false;
         UnlockSwitchUI.SetActive(true);
         spriteManager.SetActive(false); // Désactiver le SpriteManager
+        SwitchManager.SetActive(false); // Désactiver le SwitchManager
         playerInput.enabled = false;
         UnlockAbilitiesPanel.UnlockAbilitiesIsOpen = true;
         Time.timeScale = 0;
@@ -55,6 +57,7 @@ public class UnlockSwitchPanel : MonoBehaviour
         Moving.isMooving = true;
         UnlockSwitchUI.SetActive(false);
         spriteManager.SetActive(true); // Réactiver le SpriteManager
+        SwitchManager.SetActive(true); // Active le SwitchManager
         playerInput.enabled = true;
         Time.timeScale = 1f;
         gameIsPaused = false;

@@ -12,9 +12,24 @@ EditorBuildSettings:
     path: Assets/Scenes/SCN_NIV-1.unity
     guid: 232a1dbb6a11d524ca45a30d63b0b3c6
   - enabled: 1
-    path: Assets/Scenes/Game_Over.unity
-    guid: 8b9c20aed0bc33d4aa9d4cfe5edcf46a
+    path: Assets/Scenes/SCN_NIV-2.unity
+    guid: 8e68530326c5a8d44bcfdb01436bc83e
+  - enabled: 1
+    path: Assets/Scenes/SCN_NIV-3.unity
+    guid: 5499444196e5e2f47b81050f76c429c8
+  - enabled: 1
+    path: Assets/Scenes/SCN_NIV-4.unity
+    guid: d7ece0ced23a2e547af4d50f874dfd7f
+  - enabled: 1
+    path: Assets/Scenes/SCN_NIV-5.unity
+    guid: 17037a3dfdd719843a3dd9a109635211
+  - enabled: 1
+    path: Assets/Scenes/SCN_NIV-6.unity
+    guid: 249bf1279b2907743a1c4d92f1166d78
   - enabled: 1
     path: Assets/Scenes/WIN.unity
     guid: 9c1749392731acb478778c8df9da8404
+  - enabled: 1
+    path: Assets/Scenes/Game_Over.unity
+    guid: 8b9c20aed0bc33d4aa9d4cfe5edcf46a
   m_configObjects: {}

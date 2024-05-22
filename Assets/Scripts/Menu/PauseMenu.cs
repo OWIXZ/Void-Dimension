@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     public GameObject pauseMenuUI;
     [SerializeField] private SpriteManager spriteManager; // Ajoutez cette référence
+    [SerializeField] private UnifiedTileSwitch SwitchManager; // Ajoutez cette référence
 
     public void Pause(InputAction.CallbackContext context)
     {
@@ -34,6 +35,7 @@ public class PauseMenu : MonoBehaviour
     {
         Moving.isMooving = false;
         spriteManager.SetActive(false); // Désactiver le SpriteManager
+        SwitchManager.SetActive(false); // Désactiver le SwitchManager
         tileSwitch.enabled = false;
         playerInput.enabled = false;
         pauseMenuUI.SetActive(true);
@@ -47,6 +49,7 @@ public class PauseMenu : MonoBehaviour
         Moving.ResetMovement(); // Réinitialise le mouvement du joueur
         Moving.isMooving = true;
         spriteManager.SetActive(true); // Réactiver le SpriteManager
+        SwitchManager.SetActive(true); // Active le SwitchManager
         tileSwitch.enabled = true;
         playerInput.enabled = true;
         pauseMenuUI.SetActive(false);

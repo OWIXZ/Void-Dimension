@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class Timer : MonoBehaviour
 {

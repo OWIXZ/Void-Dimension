@@ -21,7 +21,6 @@ public class UnifiedTileSwitch : MonoBehaviour
 
     private float lastSwitchTime = 0;  // Timestamp de la dernière commutation
 
-
     void Start()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -114,5 +113,11 @@ public class UnifiedTileSwitch : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         gamepad.ResetHaptics();
+    }
+
+    public void SetActive(bool isActive)
+    {
+        this.enabled = isActive; // Active ou désactive ce script
+        gameObject.SetActive(isActive); // Active ou désactive le GameObject attaché
     }
 }
