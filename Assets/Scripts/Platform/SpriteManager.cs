@@ -9,15 +9,20 @@ public class SpriteManager : MonoBehaviour
     [SerializeField] ParticleSystem Instinct;
     [SerializeField] private CinemachineVirtualCamera cinemachineCamera; // Référence à la caméra virtuelle Cinemachine
 
-    private float normalSize = 13f; // Taille orthographique normale
-    private float zoomedSize = 11f; // Taille orthographique pour le zoom
-    [SerializeField] private float transitionDuration = 0.5f; // Durée de la transition en secondes
+    [SerializeField] private float transitionDuration = 0.5f; // Durée de la transition 
 
-    private bool isZooming = false; // Contrôle de l'état de zoom
-    private float targetSize; // Taille cible pour l'interpolation
-    private float timeSinceZoomStart; // Suivi du temps depuis le début du zoom
+    private bool isZooming = false;
+    private float timeSinceZoomStart = 0;
     public bool CanInstinct = false;
     public bool IsActive { get; private set; } = true;
+
+    public float actualSize = 13f;
+    public float targetSize = 11f;
+    public float baseActualSize = 13;
+    public float baseTargetSize = 11;
+    public float newActualSize = 13;
+    public float newTargetSize = 11;
+    public float updateTime = 0;
 
     void Start()
     {
@@ -28,28 +33,28 @@ public class SpriteManager : MonoBehaviour
         }
         else
         {
-            cinemachineCamera.m_Lens.OrthographicSize = normalSize; // Définissez la taille orthographique initiale
+            cinemachineCamera.m_Lens.OrthographicSize = actualSize;
         }
     }
 
     void Update()
     {
-        if (isZooming)
+        if (cinemachineCamera != null)
         {
-            if (cinemachineCamera != null)
+            updateTime += Time.deltaTime;
+            updateTime = Mathf.Clamp(updateTime, 0, 1);
+            actualSize = Mathf.Lerp(baseActualSize, newActualSize, updateTime);
+            targetSize = Mathf.Lerp(baseTargetSize, newTargetSize, updateTime);
+            if (isZooming)
             {
-                // Calcule le temps écoulé divisé par la durée totale pour obtenir un ratio
-                float ratio = timeSinceZoomStart / transitionDuration;
-                // Interpole entre la taille actuelle et la taille cible
-                cinemachineCamera.m_Lens.OrthographicSize = Mathf.Lerp(cinemachineCamera.m_Lens.OrthographicSize, targetSize, ratio);
-                timeSinceZoomStart += Time.deltaTime;
-
-                // Arrête le zooming lorsque le temps nécessaire est atteint
-                if (ratio >= 1.0f)
-                {
-                    isZooming = false;
-                }
+                timeSinceZoomStart += Time.deltaTime * (1 / transitionDuration);
             }
+            else
+            {
+                timeSinceZoomStart -= Time.deltaTime * (1 / transitionDuration);
+            }
+            timeSinceZoomStart = Mathf.Clamp(timeSinceZoomStart, 0, 1);
+            cinemachineCamera.m_Lens.OrthographicSize = Mathf.Lerp(actualSize, targetSize, timeSinceZoomStart);
         }
     }
 
@@ -63,11 +68,9 @@ public class SpriteManager : MonoBehaviour
                 Instinct.Play();
                 if (cinemachineCamera != null)
                 {
-                    targetSize = zoomedSize;
                     isZooming = true;
-                    timeSinceZoomStart = 0;
                 }
-                Time.timeScale = 0.5f; // Réduire le timescale quand l'instinct est activé
+                Time.timeScale = 0.5f;
             }
             else if (context.canceled)
             {
@@ -75,11 +78,9 @@ public class SpriteManager : MonoBehaviour
                 Instinct.Stop();
                 if (cinemachineCamera != null)
                 {
-                    targetSize = normalSize;
-                    isZooming = true;
-                    timeSinceZoomStart = 0;
+                    isZooming = false;
                 }
-                Time.timeScale = 1f; // Revenir au timescale normal quand l'instinct est désactivé
+                Time.timeScale = 1f; 
             }
         }
     }
@@ -107,7 +108,6 @@ public class SpriteManager : MonoBehaviour
             Instinct.Stop();
             if (cinemachineCamera != null)
             {
-                targetSize = normalSize;
                 isZooming = true;
                 timeSinceZoomStart = 0;
             }
