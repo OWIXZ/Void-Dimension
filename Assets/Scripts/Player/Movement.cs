@@ -281,6 +281,7 @@ public class Movement : MonoBehaviour
         {
             transform.position = respawnPoint;
             rb.velocity = Vector2.zero;
+            SceneController.instance.NextLevel();
             ResetAllPlatforms(); // Réinitialise toutes les plateformes, actives ou non
         }
         else if (collision.CompareTag("Checkpoint"))

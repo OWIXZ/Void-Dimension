@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Switch
   m_EditorClassIdentifier: 
   impactTime: 0.5
-  impactForce: 0.1
+  impactForce: 0.3
   defaultVelocity: {x: 0, y: -0.5, z: 0}
   impulsCurve:
     serializedVersion: 2

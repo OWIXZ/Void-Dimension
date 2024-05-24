@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Timer
   m_EditorClassIdentifier: 
   impactTime: 0.1
-  impactForce: 2
+  impactForce: 10
   defaultVelocity: {x: 0, y: 0.1, z: 0}
   impulsCurve:
     serializedVersion: 2
