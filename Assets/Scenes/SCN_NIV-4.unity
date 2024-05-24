@@ -13175,6 +13175,13 @@ MonoBehaviour:
   cinemachineCamera: {fileID: 917343289}
   transitionDuration: 0.5
   CanInstinct: 1
+  actualSize: 13
+  targetSize: 11
+  baseActualSize: 13
+  baseTargetSize: 11
+  newActualSize: 13
+  newTargetSize: 11
+  updateTime: 0
 --- !u!114 &1617996707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14368,7 +14375,7 @@ RectTransform:
   m_GameObject: {fileID: 2047536082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.4778361, y: 1.8927, z: 1.8927}
+  m_LocalScale: {x: 3.5699987, y: 1.9428564, z: 1.9428564}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2019687933}

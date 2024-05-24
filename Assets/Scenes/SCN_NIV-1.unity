@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5253,7 +5253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1079209050}
-  remainingTime: 65
+  remainingTime: 300
   profile: {fileID: 11400000, guid: 7f313dfe21a349348be5e467f1a9ff1c, type: 2}
 --- !u!114 &854001446
 MonoBehaviour:
@@ -7090,7 +7090,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1215.0964
+      value: 451.85867
       objectReference: {fileID: 0}
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalScale.y
@@ -7098,7 +7098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 326.04785
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8281,7 +8281,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1216.9126
+      value: 452.5341
       objectReference: {fileID: 0}
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalScale.y
@@ -8289,7 +8289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 326.04785
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 2085735655697145111, guid: 1d4adccb3eae957478f6ffc15db77692, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14060,7 +14060,7 @@ RectTransform:
   m_GameObject: {fileID: 1360590998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.4778361, y: 1.8927, z: 1.8927}
+  m_LocalScale: {x: 3.5699987, y: 1.9428564, z: 1.9428564}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 658983479}
