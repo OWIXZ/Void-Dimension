@@ -18,10 +18,10 @@ public class TriggerCam : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            spriteManager.baseActualSize = spriteManager.actualSize;
-            spriteManager.baseTargetSize = spriteManager.targetSize;
-            spriteManager.newActualSize = newActualSize;
-            spriteManager.newTargetSize = newTargetSize;
+            spriteManager.baseActualFOV = spriteManager.actualFOV;
+            spriteManager.baseTargetFOV = spriteManager.targetFOV;
+            spriteManager.newActualFOV = newActualSize;
+            spriteManager.newTargetFOV = newTargetSize;
             spriteManager.updateTime = 0;
         }
     }
@@ -30,10 +30,10 @@ public class TriggerCam : MonoBehaviour
 
         if (collision.tag == "Player")
         {
-            spriteManager.newActualSize = spriteManager.baseActualSize;
-            spriteManager.newTargetSize = spriteManager.baseTargetSize;
-            spriteManager.newActualSize = newActualSize;
-            spriteManager.newTargetSize = newTargetSize;
+            spriteManager.newActualFOV = spriteManager.baseActualFOV;
+            spriteManager.newTargetFOV = spriteManager.baseTargetFOV;
+            spriteManager.newActualFOV = newActualSize;
+            spriteManager.newTargetFOV = newTargetSize;
             spriteManager.updateTime = 0;
         }
     }

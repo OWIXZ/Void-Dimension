@@ -16,12 +16,12 @@ public class SpriteManager : MonoBehaviour
     public bool CanInstinct = false;
     public bool IsActive { get; private set; } = true;
 
-    public float actualSize = 13f;
-    public float targetSize = 11f;
-    public float baseActualSize = 13;
-    public float baseTargetSize = 11;
-    public float newActualSize = 13;
-    public float newTargetSize = 11;
+    public float actualFOV = 60f;
+    public float targetFOV = 40f;
+    public float baseActualFOV = 60f;
+    public float baseTargetFOV = 40f;
+    public float newActualFOV = 60f;
+    public float newTargetFOV = 40f;
     public float updateTime = 0;
 
     void Start()
@@ -33,7 +33,8 @@ public class SpriteManager : MonoBehaviour
         }
         else
         {
-            cinemachineCamera.m_Lens.OrthographicSize = actualSize;
+            cinemachineCamera.m_Lens.Orthographic = false; // Assurez-vous que la caméra n'est pas en mode orthographique
+            cinemachineCamera.m_Lens.FieldOfView = actualFOV;
         }
     }
 
@@ -43,8 +44,8 @@ public class SpriteManager : MonoBehaviour
         {
             updateTime += Time.deltaTime;
             updateTime = Mathf.Clamp(updateTime, 0, 1);
-            actualSize = Mathf.Lerp(baseActualSize, newActualSize, updateTime);
-            targetSize = Mathf.Lerp(baseTargetSize, newTargetSize, updateTime);
+            actualFOV = Mathf.Lerp(baseActualFOV, newActualFOV, updateTime);
+            targetFOV = Mathf.Lerp(baseTargetFOV, newTargetFOV, updateTime);
             if (isZooming)
             {
                 timeSinceZoomStart += Time.deltaTime * (1 / transitionDuration);
@@ -54,7 +55,7 @@ public class SpriteManager : MonoBehaviour
                 timeSinceZoomStart -= Time.deltaTime * (1 / transitionDuration);
             }
             timeSinceZoomStart = Mathf.Clamp(timeSinceZoomStart, 0, 1);
-            cinemachineCamera.m_Lens.OrthographicSize = Mathf.Lerp(actualSize, targetSize, timeSinceZoomStart);
+            cinemachineCamera.m_Lens.FieldOfView = Mathf.Lerp(actualFOV, targetFOV, timeSinceZoomStart);
         }
     }
 
@@ -80,7 +81,7 @@ public class SpriteManager : MonoBehaviour
                 {
                     isZooming = false;
                 }
-                Time.timeScale = 1f; 
+                Time.timeScale = 1f;
             }
         }
     }

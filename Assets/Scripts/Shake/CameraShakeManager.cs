@@ -8,6 +8,7 @@ public class CameraShakeManager : MonoBehaviour
     public static CameraShakeManager instance;
     [SerializeField] private float globalShakeForce = 1f;
     [SerializeField] private CinemachineImpulseListener impulseListener;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera; // Référence à la CinemachineVirtualCamera
 
     private CinemachineImpulseDefinition impulseDefinition;
 
@@ -17,6 +18,9 @@ public class CameraShakeManager : MonoBehaviour
         {
             instance = this;
         }
+
+        // Assurez-vous que la caméra est en mode perspective
+        SetCameraToPerspective();
     }
 
     public void CameraShake(CinemachineImpulseSource impulseSource)
@@ -43,5 +47,20 @@ public class CameraShakeManager : MonoBehaviour
         impulseListener.m_ReactionSettings.m_AmplitudeGain = profile.ListenerAmplitude;
         impulseListener.m_ReactionSettings.m_FrequencyGain = profile.listenerFrequency;
         impulseListener.m_ReactionSettings.m_Duration = profile.listenerDuration;
+    }
+
+    private void SetCameraToPerspective()
+    {
+        if (virtualCamera != null)
+        {
+            Camera mainCamera = Camera.main;
+            if (mainCamera != null)
+            {
+                mainCamera.orthographic = false;
+            }
+
+            // Optionnel: Ajuster d'autres paramètres spécifiques à la vue perspective
+            virtualCamera.m_Lens.FieldOfView = 60f; // Exemple de réglage pour le champ de vision
+        }
     }
 }
